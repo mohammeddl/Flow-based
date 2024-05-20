@@ -6,6 +6,7 @@ import ReactFlow, {
   addEdge,
   Position,
   MiniMap,
+  Panel,
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -20,7 +21,7 @@ function Flow() {
     {
       id: 'A',
       type: 'group',
-      position: { x: 0, y: 0 },
+      position: { x: 500, y: 0 },
       style: {
         width: 170,
         height: 140,
@@ -30,7 +31,7 @@ function Flow() {
       id: "A-1",
       type: "input",
       data: { label: "input node" },
-      position: { x: 250, y: 25 },
+      position: { x: 250, y: 130 },
       extent: 'parent',
       parentId: 'A',
     },
@@ -46,21 +47,22 @@ function Flow() {
       id: "3",
       type: "output",
       data: { label: "input node 2" },
-      position: { x: 100, y: 100 },
+      position: { x: 150, y: 205 },
     },
     {
       id: "node-1",
       type: "textUpdater",
-      position: { x: 0, y: 0 },
+      position: { x: 469, y: 200 },
       data: { value: 123 },
       style: { border: "1px solid #777", padding: 10, width: 200 , backgroundColor: "#f0f0f0", borderRadius: 10}, 
     },
   ];
 
-  const initialEdges = [];
+  const initialEdges = [{ id: "e1-2", source: "A-1", target: "A-2", animated: true  }];
 
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+  const [variant, setVariant] = useState('dots');
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -90,6 +92,8 @@ function Flow() {
     }
   };
 
+  
+
   return (
     <div style={{ height: "100%" }}>
       <ReactFlow
@@ -98,11 +102,19 @@ function Flow() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        defaultNodes={nodes} 
+        defaultEdges={edges}
         style={rfStyle}
         nodeTypes={nodeTypes}
         attributionPosition="top-right">
            <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-        <Background />
+        <Background color="#ccc" variant={variant} />
+        <Panel>
+        <div>variant:</div>
+        <button onClick={() => setVariant('dots')}>dots</button>
+        <button onClick={() => setVariant('lines')}>lines</button>
+        <button onClick={() => setVariant('cross')}>cross</button>
+      </Panel>
         <Controls />
       </ReactFlow>
     </div>
