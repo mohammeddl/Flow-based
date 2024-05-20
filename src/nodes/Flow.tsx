@@ -17,7 +17,6 @@ import TextUpdaterNode from "./TextUpdaterNode";
 const nodeTypes = { textUpdater: TextUpdaterNode };
 
 function Flow() {
-  
   const initialNodes = [
     {
       id: "A",
@@ -47,7 +46,7 @@ function Flow() {
     {
       id: "3",
       type: "output",
-      data: { label: "input node 2" },
+      data: { label: "output node 2" },
       position: { x: 150, y: 205 },
     },
     {
@@ -114,6 +113,8 @@ function Flow() {
         return "#6ede87";
       case "output":
         return "#6865A5";
+      case "textUpdater":
+        return "#ff7e7e";
       default:
         return "#ff0072";
     }
@@ -131,17 +132,33 @@ function Flow() {
         defaultEdges={edges}
         style={rfStyle}
         nodeTypes={nodeTypes}
-        attributionPosition="top-right"
-      >
+        attributionPosition='top-right'>
         <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-        <Background color="#ccc" variant={variant} />
+        <Background color='#ccc' variant={variant} />
         <Panel>
-          <div>variant:</div>
-          <button onClick={() => setVariant("dots")}>dots</button>
-          <button onClick={() => setVariant("lines")}>lines</button>
-          <button onClick={() => setVariant("cross")}>cross</button>
-          <button onClick={addNewNode}>Add Node</button>
+          <h2 className="px-2  text-2xl font-bold text-white">variant:</h2>
+          <div className="font-semibold ">
+            <button
+              className='bg-white px-2 mx-2 rounded-md'
+              onClick={() => setVariant("dots")}>
+              dots
+            </button>
+            <button
+              className='bg-white mx-2 px-2 rounded-md'
+              onClick={() => setVariant("lines")}>
+              lines
+            </button>
+            <button
+              className='bg-white mx-2 px-2 rounded-md'
+              onClick={() => setVariant("cross")}>
+              cross
+            </button>
+            <button className='bg-white mx-2 px-2 rounded-md' onClick={addNewNode}>
+              Add Node
+            </button>
+          </div>
         </Panel>
+        
         <Controls />
       </ReactFlow>
     </div>
