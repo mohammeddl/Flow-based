@@ -4,7 +4,6 @@ import ReactFlow, {
   applyEdgeChanges,
   applyNodeChanges,
   addEdge,
-  Position,
   MiniMap,
   Panel,
 } from "reactflow";
@@ -80,13 +79,12 @@ function Flow() {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     []
   );
-
   const onConnect = useCallback(
     (params) => setEdges((eds) => addEdge(params, eds)),
     []
   );
 
-  const addNewNode = () => {
+  const addNewText = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
       type: "textUpdater",
@@ -100,8 +98,20 @@ function Flow() {
         borderRadius: 10,
       },
     };
+    localStorage.setItem("nodes", JSON.stringify(newNode));
     setNodes((nds) => nds.concat(newNode));
   };
+
+const addNewInput = () => {
+  const newNode = {
+    id: `node-${nodes.length + 1}`,
+    type: "input",
+    position: { x: Math.random() * 600, y: Math.random() * 400 },
+    data: { label: "input node" },
+  };
+  localStorage.setItem("nodes", JSON.stringify(newNode));
+  setNodes((nds) => nds.concat(newNode));
+}
 
   const rfStyle = {
     backgroundColor: "#005a82",
@@ -121,46 +131,62 @@ function Flow() {
   };
 
   return (
-    <div style={{ height: "100%" }}>
-      <ReactFlow
-        nodes={nodes}
-        edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        defaultNodes={nodes}
-        defaultEdges={edges}
-        style={rfStyle}
-        nodeTypes={nodeTypes}
-        attributionPosition='top-right'>
-        <MiniMap nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-        <Background color='#ccc' variant={variant} />
-        <Panel>
-          <h2 className="px-2  text-2xl font-bold text-white">variant:</h2>
-          <div className="font-semibold ">
-            <button
-              className='bg-white px-2 mx-2 rounded-md'
-              onClick={() => setVariant("dots")}>
-              dots
-            </button>
-            <button
-              className='bg-white mx-2 px-2 rounded-md'
-              onClick={() => setVariant("lines")}>
-              lines
-            </button>
-            <button
-              className='bg-white mx-2 px-2 rounded-md'
-              onClick={() => setVariant("cross")}>
-              cross
-            </button>
-            <button className='bg-white mx-2 px-2 rounded-md' onClick={addNewNode}>
-              Add Node
-            </button>
-          </div>
-        </Panel>
-        
-        <Controls />
-      </ReactFlow>
+    <div className='h-screen flex'>
+      <div className='flex flex-col  bg-blue-500 p-4 text-white'>
+        <h2 className='text-2xl font-bold mb-4'>Variant:</h2>
+        <div className='space-x-2'>
+          <button
+            className='bg-white text-black px-4 py-2 rounded-md'
+            onClick={() => setVariant("dots")}>
+            Dots
+          </button>
+          <button
+            className='bg-white text-black px-4 py-2 rounded-md'
+            onClick={() => setVariant("lines")}>
+            Lines
+          </button>
+          <button
+            className='bg-white text-black px-4 py-2 rounded-md'
+            onClick={() => setVariant("cross")}>
+            Cross
+          </button>
+        </div>
+        <div className="max-h-fit border-solid border-2 my-2 border-gray-600 flex flex-col">
+        <button
+          className='bg-white text-black px-4 py-2  m-4 rounded-md'
+          onClick={addNewText}>
+          Add Text
+        </button>
+        <button
+          className='bg-white text-black px-4 py-2  m-4 rounded-md'
+          onClick={addNewInput}>
+          Add Input
+        </button>
+        </div>
+      </div>
+      <div className='flex-grow'>
+        <ReactFlow
+          nodes={nodes}
+          edges={edges}
+          onNodesChange={onNodesChange}
+          onEdgesChange={onEdgesChange}
+          onConnect={onConnect}
+          defaultNodes={nodes}
+          defaultEdges={edges}
+          style={rfStyle}
+          nodeTypes={nodeTypes}
+          attributionPosition='top-right'>
+          <MiniMap
+            className='bg-blue-200'
+            nodeColor={nodeColor}
+            nodeStrokeWidth={3}
+            zoomable
+            pannable
+          />
+          <Background color='#ccc' variant={variant} />
+          <Controls />
+        </ReactFlow>
+      </div>
     </div>
   );
 }
