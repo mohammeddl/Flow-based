@@ -1,10 +1,18 @@
 import Flow from "../nodes/Flow";
 import { useDispatch, useSelector } from "react-redux";
 import { setVariant, addNode } from "../redux/workFlow/FlowSlice";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
+
+  const addNodeToLocalStorage = (newNode) => {
+    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
+    storedNodes.push(newNode);
+    localStorage.setItem("nodes", JSON.stringify(storedNodes));
+  };
 
   const addNewText = () => {
     const newNode = {
@@ -20,7 +28,7 @@ export default function SideBar() {
         borderRadius: 10,
       },
     };
-    localStorage.setItem("nodes", JSON.stringify(newNode));
+    addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
 
@@ -31,12 +39,15 @@ export default function SideBar() {
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "input node" },
     };
-    localStorage.setItem("nodes", JSON.stringify(newNode));
+    addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
 
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => setIsOpen(!isOpen);
+
   return (
-    <div className='h-screen flex'>
+    <div className='h-screen flex '>
       <div className='flex flex-col bg-blue-500 p-4 text-white'>
         <h2 className='text-2xl font-bold mb-4'>Variant:</h2>
         <div className='space-x-2'>
@@ -57,16 +68,38 @@ export default function SideBar() {
           </button>
         </div>
         <div className='max-h-fit border-solid border-2 my-2 border-gray-600 flex flex-col'>
-          <button
-            className='bg-white text-black px-4 py-2 m-4 rounded-md'
-            onClick={addNewText}>
-            Add Text
-          </button>
-          <button
-            className='bg-white text-black px-4 py-2 m-4 rounded-md'
-            onClick={addNewInput}>
-            Add Input
-          </button>
+          <div className='dropdown'>
+            <div className='flex justify-center items-center  bg-white'>
+              {isOpen ? (
+                <ChevronUp className='text-black' />
+              ) : (
+                <ChevronDown className='text-black' />
+              )}
+              <button
+                className='bg-white text-black px-4 py-2 m-4 rounded-md'
+                onClick={toggleDropdown}>
+                Input
+              </button>
+            </div>
+            {isOpen && (
+              <ul className='dropdown-menu'>
+                <li>
+                  <button
+                    className='bg-white text-black px-4 py-2 m-4 rounded-md'
+                    onClick={addNewInput}>
+                    Add Input
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className='bg-white text-black px-4 py-2 m-4 rounded-md'
+                    onClick={addNewText}>
+                    Add Text
+                  </button>
+                </li>
+              </ul>
+            )}
+          </div>
         </div>
       </div>
       <div className='flex-grow'>

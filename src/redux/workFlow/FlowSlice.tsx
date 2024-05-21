@@ -22,8 +22,13 @@ const flowSlice = createSlice({
     addNode: (state, action) => {
       state.nodes.push(action.payload);
     },
+    getNodesLocalStorage: (state) => {
+      const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "") || [];
+      state.nodes = storedNodes;
+    },
   },
 });
 
-export const { setNodes, setEdges, setVariant, addNode } = flowSlice.actions;
+export const { setNodes, setEdges, setVariant, addNode, getNodesLocalStorage } =
+  flowSlice.actions;
 export default flowSlice.reducer;

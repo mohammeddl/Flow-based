@@ -10,7 +10,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import { useCallback } from "react";
-import { setNodes, setEdges, addNode } from "../redux/workFlow/FlowSlice";
+import { setNodes, setEdges } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
 import { useDispatch, useSelector } from "react-redux";
@@ -70,9 +70,10 @@ function Flow() {
   //   },
   // ];
 
-  const initialEdges = [
-    { id: "e1-2", source: "A-1", target: "A-2", animated: true },
-  ];
+  const getNodesFromLocalStorage = () => {
+    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
+    return storedNodes;
+  };
 
   const onNodesChange = useCallback(
     (changes) => dispatch(setNodes(applyNodeChanges(changes, nodes))),
@@ -87,10 +88,8 @@ function Flow() {
     [edges, dispatch]
   );
 
-  
-
   const rfStyle = {
-    backgroundColor: "#005a82",
+    backgroundColor: "#f0f0f0",
   };
 
   const nodeColor = (node) => {
