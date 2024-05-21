@@ -10,7 +10,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import { useCallback } from "react";
-import { setNodes, setEdges, addNode } from '../redux/workFlow/Variant';
+import { setNodes, setEdges, addNode } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,34 +87,7 @@ function Flow() {
     [edges, dispatch]
   );
 
-  const addNewText = () => {
-    const newNode = {
-      id: `node-${nodes.length + 1}`,
-      type: "textUpdater",
-      position: { x: Math.random() * 600, y: Math.random() * 400 },
-      data: { value: Math.floor(Math.random() * 100) },
-      style: {
-        border: "1px solid #777",
-        padding: 10,
-        width: 200,
-        backgroundColor: "#f0f0f0",
-        borderRadius: 10,
-      },
-    };
-    localStorage.setItem("nodes", JSON.stringify(newNode));
-    dispatch(addNode(newNode));
-  };
-
-  const addNewInput = () => {
-    const newNode = {
-      id: `node-${nodes.length + 1}`,
-      type: "input",
-      position: { x: Math.random() * 600, y: Math.random() * 400 },
-      data: { label: "input node" },
-    };
-    localStorage.setItem("nodes", JSON.stringify(newNode));
-    dispatch(addNode(newNode));
-  };
+  
 
   const rfStyle = {
     backgroundColor: "#005a82",

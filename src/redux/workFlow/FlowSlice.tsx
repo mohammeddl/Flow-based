@@ -6,7 +6,7 @@ const initialState = {
   variant: "dots",
 };
 
-const variantSlice = createSlice({
+const flowSlice = createSlice({
   name: "flow",
   initialState,
   reducers: {
@@ -25,5 +25,5 @@ const variantSlice = createSlice({
   },
 });
 
-export const { setNodes, setEdges, setVariant, addNode } = variantSlice.actions;
-export default variantSlice.reducer;
+export const { setNodes, setEdges, setVariant, addNode } = flowSlice.actions;
+export default flowSlice.reducer;
