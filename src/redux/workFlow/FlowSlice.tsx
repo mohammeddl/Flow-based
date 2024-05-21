@@ -4,6 +4,7 @@ const initialState = {
   nodes: [],
   edges: [],
   variant: "dots",
+  selectedNode: null,
 };
 
 const flowSlice = createSlice({
@@ -16,11 +17,14 @@ const flowSlice = createSlice({
     setEdges: (state, action) => {
       state.edges = action.payload;
     },
+    addNode: (state, action) => {
+      state.nodes.push(action.payload);
+    },
     setVariant: (state, action) => {
       state.variant = action.payload;
     },
-    addNode: (state, action) => {
-      state.nodes.push(action.payload);
+    setSelectedNode: (state, action) => {
+      state.selectedNode = action.payload;
     },
     getNodesLocalStorage: (state) => {
       const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "") || [];
@@ -29,6 +33,6 @@ const flowSlice = createSlice({
   },
 });
 
-export const { setNodes, setEdges, setVariant, addNode, getNodesLocalStorage } =
+export const { setNodes, setEdges, addNode, setVariant, setSelectedNode, getNodesLocalStorage } =
   flowSlice.actions;
 export default flowSlice.reducer;

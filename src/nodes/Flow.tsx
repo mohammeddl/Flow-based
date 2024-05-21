@@ -1,3 +1,4 @@
+// components/Flow.js
 import ReactFlow, {
   Controls,
   Background,
@@ -5,15 +6,14 @@ import ReactFlow, {
   applyNodeChanges,
   addEdge,
   MiniMap,
-  Panel,
-} from "reactflow";
-import "reactflow/dist/style.css";
+} from 'reactflow';
+import 'reactflow/dist/style.css';
 
-import { useCallback } from "react";
-import { setNodes, setEdges } from "../redux/workFlow/FlowSlice";
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setNodes, setEdges, setSelectedNode } from '../redux/workFlow/FlowSlice';
 
-import TextUpdaterNode from "./TextUpdaterNode";
-import { useDispatch, useSelector } from "react-redux";
+import TextUpdaterNode from './TextUpdaterNode';
 
 const nodeTypes = { textUpdater: TextUpdaterNode };
 
@@ -22,58 +22,6 @@ function Flow() {
   const nodes = useSelector((state) => state.flow.nodes);
   const edges = useSelector((state) => state.flow.edges);
   const variant = useSelector((state) => state.flow.variant);
-
-  // const initialNodes = [
-  //   {
-  //     id: "A",
-  //     type: "group",
-  //     position: { x: 500, y: 0 },
-  //     style: {
-  //       width: 170,
-  //       height: 140,
-  //     },
-  //   },
-  //   {
-  //     id: "A-1",
-  //     type: "input",
-  //     data: { label: "input node" },
-  //     position: { x: 250, y: 130 },
-  //     extent: "parent",
-  //     parentId: "A",
-  //   },
-  //   {
-  //     id: "A-2",
-  //     type: "output",
-  //     data: { label: "output node" },
-  //     position: { x: 250, y: 250 },
-  //     extent: "parent",
-  //     parentId: "A",
-  //   },
-  //   {
-  //     id: "3",
-  //     type: "output",
-  //     data: { label: "output node 2" },
-  //     position: { x: 150, y: 205 },
-  //   },
-  //   {
-  //     id: "node-1",
-  //     type: "textUpdater",
-  //     position: { x: 469, y: 200 },
-  //     data: { value: 123 },
-  //     style: {
-  //       border: "1px solid #777",
-  //       padding: 10,
-  //       width: 200,
-  //       backgroundColor: "#f0f0f0",
-  //       borderRadius: 10,
-  //     },
-  //   },
-  // ];
-
-  const getNodesFromLocalStorage = () => {
-    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
-    return storedNodes;
-  };
 
   const onNodesChange = useCallback(
     (changes) => dispatch(setNodes(applyNodeChanges(changes, nodes))),
@@ -88,20 +36,27 @@ function Flow() {
     [edges, dispatch]
   );
 
+  const onNodeClick = useCallback(
+    (event, node) => {
+      dispatch(setSelectedNode(node));
+    },
+    [dispatch]
+  );
+
   const rfStyle = {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: '#f0f0f0',
   };
 
   const nodeColor = (node) => {
     switch (node.type) {
-      case "input":
-        return "#6ede87";
-      case "output":
-        return "#6865A5";
-      case "textUpdater":
-        return "#ff7e7e";
+      case 'input':
+        return '#6ede87';
+      case 'output':
+        return '#6865A5';
+      case 'textUpdater':
+        return '#ff7e7e';
       default:
-        return "#ff0072";
+        return '#ff0072';
     }
   };
 
@@ -112,19 +67,13 @@ function Flow() {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onConnect={onConnect}
-      defaultNodes={nodes}
-      defaultEdges={edges}
+      onNodeClick={onNodeClick}
       style={rfStyle}
       nodeTypes={nodeTypes}
-      attributionPosition='top-right'>
-      <MiniMap
-        className='bg-blue-200'
-        nodeColor={nodeColor}
-        nodeStrokeWidth={3}
-        zoomable
-        pannable
-      />
-      <Background color='#ccc' variant={variant} />
+      attributionPosition="top-right"
+    >
+      <MiniMap className="bg-blue-200" nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
+      <Background color="#ccc" variant={variant} />
       <Controls />
     </ReactFlow>
   );
