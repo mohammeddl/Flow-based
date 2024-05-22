@@ -1,4 +1,3 @@
-// components/Flow.js
 import ReactFlow, {
   Controls,
   Background,
@@ -6,14 +5,18 @@ import ReactFlow, {
   applyNodeChanges,
   addEdge,
   MiniMap,
-} from 'reactflow';
-import 'reactflow/dist/style.css';
+} from "reactflow";
+import "reactflow/dist/style.css";
 
-import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { setNodes, setEdges, setSelectedNode } from '../redux/workFlow/FlowSlice';
+import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setNodes,
+  setEdges,
+  setSelectedNode,
+} from "../redux/workFlow/FlowSlice";
 
-import TextUpdaterNode from './TextUpdaterNode';
+import TextUpdaterNode from "./TextUpdaterNode";
 
 const nodeTypes = { textUpdater: TextUpdaterNode };
 
@@ -38,25 +41,27 @@ function Flow() {
 
   const onNodeClick = useCallback(
     (event, node) => {
-      dispatch(setSelectedNode(node));
+      if (node.type === "input") {
+        dispatch(setSelectedNode(node));
+      }
     },
     [dispatch]
   );
 
   const rfStyle = {
-    backgroundColor: '#f0f0f0',
+    backgroundColor: "#f0f0f0",
   };
 
   const nodeColor = (node) => {
     switch (node.type) {
-      case 'input':
-        return '#6ede87';
-      case 'output':
-        return '#6865A5';
-      case 'textUpdater':
-        return '#ff7e7e';
+      case "input":
+        return "#6ede87";
+      case "output":
+        return "#6865A5";
+      case "textUpdater":
+        return "#ff7e7e";
       default:
-        return '#ff0072';
+        return "#ff0072";
     }
   };
 
@@ -70,10 +75,15 @@ function Flow() {
       onNodeClick={onNodeClick}
       style={rfStyle}
       nodeTypes={nodeTypes}
-      attributionPosition="top-right"
-    >
-      <MiniMap className="bg-blue-200" nodeColor={nodeColor} nodeStrokeWidth={3} zoomable pannable />
-      <Background color="#ccc" variant={variant} />
+      attributionPosition='top-right'>
+      <MiniMap
+        className='bg-blue-200'
+        nodeColor={nodeColor}
+        nodeStrokeWidth={3}
+        zoomable
+        pannable
+      />
+      <Background color='#ccc' variant={variant} />
       <Controls />
     </ReactFlow>
   );

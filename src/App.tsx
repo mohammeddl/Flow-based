@@ -6,10 +6,9 @@ import { getNodesLocalStorage } from "./redux/workFlow/FlowSlice";
 export default function App() {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-dispatch(getNodesLocalStorage())
-
-  },[])
+  useEffect(() => {
+    dispatch(getNodesLocalStorage());
+  }, []);
   return (
     <>
       <SideBar />

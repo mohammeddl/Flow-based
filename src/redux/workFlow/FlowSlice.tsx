@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   nodes: [],
   edges: [],
-  variant: "dots",
+  variant: "cross",
   selectedNode: null,
 };
 
@@ -33,6 +33,12 @@ const flowSlice = createSlice({
   },
 });
 
-export const { setNodes, setEdges, addNode, setVariant, setSelectedNode, getNodesLocalStorage } =
-  flowSlice.actions;
+export const {
+  setNodes,
+  setEdges,
+  addNode,
+  setVariant,
+  setSelectedNode,
+  getNodesLocalStorage,
+} = flowSlice.actions;
 export default flowSlice.reducer;
