@@ -5,6 +5,7 @@ const initialState = {
   edges: [],
   variant: "cross",
   selectedNode: null,
+  responseNode: null,
 };
 
 const flowSlice = createSlice({
@@ -30,6 +31,9 @@ const flowSlice = createSlice({
       const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "") || [];
       state.nodes = storedNodes;
     },
+    getResponseNode:(state, action) => {
+      state.responseNode = action.payload;
+    },
   },
 });
 
@@ -40,5 +44,6 @@ export const {
   setVariant,
   setSelectedNode,
   getNodesLocalStorage,
+  getResponseNode,
 } = flowSlice.actions;
 export default flowSlice.reducer;

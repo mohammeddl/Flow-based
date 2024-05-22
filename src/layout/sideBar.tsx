@@ -45,6 +45,16 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
+  const addNewOutput = () => {
+    const newNode = {
+      id: `node-${nodes.length + 1}`,
+      type: "output",
+      position: { x: Math.random() * 600, y: Math.random() * 400 },
+      data: { label: "Response" },
+    };
+    addNodeToLocalStorage(newNode);
+    dispatch(addNode(newNode));
+  };
 
   const [isOpen, setIsOpen] = useState(false);
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -132,7 +142,7 @@ export default function SideBar() {
                 <li>
                   <button
                     className='bg-green-500 text-white px-4 w-48 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addNewText}>
+                    onClick={addNewOutput}>
                     Status
                   </button>
                 </li>

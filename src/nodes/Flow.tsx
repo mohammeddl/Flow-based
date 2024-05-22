@@ -14,6 +14,7 @@ import {
   setNodes,
   setEdges,
   setSelectedNode,
+  getResponseNode,
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
@@ -34,9 +35,23 @@ function Flow() {
     (changes) => dispatch(setEdges(applyEdgeChanges(changes, edges))),
     [edges, dispatch]
   );
+
   const onConnect = useCallback(
-    (params) => dispatch(setEdges(addEdge(params, edges))),
-    [edges, dispatch]
+    (params) => {
+      dispatch(setEdges(addEdge(params, edges)));
+
+      const sourceNode = nodes.find((node) => node.id === params.source);
+      const targetNode = nodes.find((node) => node.id === params.target);
+
+      if (sourceNode.type === "input" && targetNode.type === "output") {
+        const responseData = {
+          data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
+        };
+        console.log("conacted nodes");
+        dispatch(getResponseNode(responseData));
+      }
+    },
+    [edges, nodes, dispatch]
   );
 
   const onNodeClick = useCallback(
@@ -75,7 +90,8 @@ function Flow() {
       onNodeClick={onNodeClick}
       style={rfStyle}
       nodeTypes={nodeTypes}
-      attributionPosition='top-right'>
+      attributionPosition='top-right'
+      fitView>
       <MiniMap
         className='bg-blue-200'
         nodeColor={nodeColor}
