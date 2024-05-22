@@ -47,7 +47,7 @@ function Flow() {
         const responseData = {
           data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
         };
-        console.log("conacted nodes");
+        
         dispatch(getResponseNode(responseData));
       }
     },

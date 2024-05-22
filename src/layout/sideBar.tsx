@@ -1,15 +1,17 @@
-// components/SideBar.js
+
 import Flow from "../nodes/Flow";
 import { useDispatch, useSelector } from "react-redux";
 import { setVariant, addNode } from "../redux/workFlow/FlowSlice";
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
+import NodeResponse from "../nodes/NodeResponse";
 
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
   const selectedNode = useSelector((state) => state.flow.selectedNode);
+  const getResponseNode = useSelector((state) => state.flow.responseNode);
 
   const addNodeToLocalStorage = (newNode) => {
     const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
@@ -20,9 +22,9 @@ export default function SideBar() {
   const addNewText = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
-      type: "textUpdater",
+      type: "selectorNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
-      data: { value: Math.floor(Math.random() * 100) },
+      data: { label: "More" },
       style: {
         border: "1px solid #777",
         padding: 10,
@@ -41,6 +43,17 @@ export default function SideBar() {
       type: "input",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "input node" },
+    };
+    addNodeToLocalStorage(newNode);
+    dispatch(addNode(newNode));
+  };
+
+  const addHttps = () => {
+    const newNode = {
+      id: `node-${nodes.length + 1}`,
+      type: "input",
+      position: { x: Math.random() * 600, y: Math.random() * 400 },
+      data: { label: "Https" },
     };
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
@@ -135,7 +148,7 @@ export default function SideBar() {
                 <li>
                   <button
                     className='bg-red-500 text-white px-4 w-48 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addNewInput}>
+                    onClick={addHttps}>
                     Https
                   </button>
                 </li>
@@ -163,6 +176,11 @@ export default function SideBar() {
         {selectedNode && (
           <div className='w-2/5 bg-gray-100 p-4 '>
             <NodeForm />
+          </div>
+        )}
+        {getResponseNode && (
+          <div className='w-2/5 bg-gray-100 p-4 '>
+            <NodeResponse />
           </div>
         )}
       </div>

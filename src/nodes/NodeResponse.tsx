@@ -13,6 +13,8 @@ export default function NodeResponse() {
     dispatch(getResponseNode(null));
   };
 
+  console.log("tests", responseNode);
+
   if (!isOpen || !responseNode) {
     return null;
   }
@@ -27,7 +29,7 @@ export default function NodeResponse() {
         </div>
         <h2 className='text-xl font-bold mb-4'>Node Response</h2>
         <div>
-            <p>{JSON.stringify(responseNode.data)}</p>
+          <img src={responseNode.data.message} alt='response' />
         </div>
       </div>
     </>
