@@ -33,7 +33,7 @@ const flowSlice = createSlice({
       state.nodes = storedNodes;
       state.edges = storedEdges;
     },
-    getResponseNode:(state, action) => {
+    getResponseNode: (state, action) => {
       state.responseNode = action.payload;
     },
   },

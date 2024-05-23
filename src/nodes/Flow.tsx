@@ -30,7 +30,9 @@ function Flow() {
   const updateNodePositionInLocalStorage = (node) => {
     const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
     const updatedNodes = storedNodes.map((storedNode) =>
-      storedNode.id === node.id ? { ...storedNode, position: node.position } : storedNode
+      storedNode.id === node.id
+        ? { ...storedNode, position: node.position }
+        : storedNode
     );
     localStorage.setItem("nodes", JSON.stringify(updatedNodes));
   };
@@ -59,29 +61,36 @@ function Flow() {
       const updatedEdges = addEdge(params, edges);
       dispatch(setEdges(updatedEdges));
       localStorage.setItem("edges", JSON.stringify(updatedEdges));
-  
+
       const sourceNode = nodes.find((node) => node.id === params.source);
       const targetNode = nodes.find((node) => node.id === params.target);
-  
+
       if (sourceNode.type === "input" && targetNode.type === "output") {
         const responseData = {
           data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
         };
-        
+
         dispatch(getResponseNode(responseData));
       }
     },
     [edges, nodes, dispatch]
   );
-  
 
   const onNodeClick = useCallback(
     (event, node) => {
       if (node.type === "input") {
         dispatch(setSelectedNode(node));
       }
+      if (node.data.label === "Run") {
+        const responseNode = nodes.find(
+          (n) => n.type === "output" && n.data.label === "Response"
+        );
+        if (responseNode) {
+          dispatch(getResponseNode(responseNode.data));
+        }
+      }
     },
-    [dispatch]
+    [dispatch, nodes]
   );
 
   const rfStyle = {

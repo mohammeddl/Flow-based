@@ -1,4 +1,3 @@
-
 import Flow from "../nodes/Flow";
 import { useDispatch, useSelector } from "react-redux";
 import { setVariant, addNode } from "../redux/workFlow/FlowSlice";
@@ -36,6 +35,23 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
+  const addRunButton = () => {
+    const newNode = {
+      id: `node-${nodes.length + 1}`,
+      type: "selectorNode",
+      position: { x: Math.random() * 600, y: Math.random() * 400 },
+      data: { label: "Run" },
+      style: {
+        border: "1px solid #777",
+        padding: 10,
+        width: 200,
+        backgroundColor: "#f0f0f0",
+        borderRadius: 10,
+      },
+    };
+    addNodeToLocalStorage(newNode);
+    dispatch(addNode(newNode));
+  };
   const addNewInput = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
@@ -61,7 +77,7 @@ export default function SideBar() {
       id: `node-${nodes.length + 1}`,
       type: "output",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
-      data: { label: "Response" ,outputPorts: []},
+      data: { label: "Response", outputPorts: [] },
     };
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
@@ -83,21 +99,21 @@ export default function SideBar() {
             Dots
           </button>
           <button
-            className='px-2 bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
+            className='px-2 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
             onClick={() => dispatch(setVariant("lines"))}>
             Lines
           </button>
           <button
-            className='px-2 bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
+            className='px-2 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
             onClick={() => dispatch(setVariant("cross"))}>
             Cross
           </button>
         </div>
-        <div className='max-h-fit border-solid border-2 my-2 border-gray-600 flex flex-col'>
+        <div className='max-h-fit border-solid w-3/4 border-2 my-2 border-gray-600 flex flex-col'>
           <div className='dropdown'>
             <div
               onClick={toggleDropdown}
-              className='flex items-center h-12 border-solid border-2 cursor-pointer border-gray-400 bg-white'>
+              className='flex items-center h-12  border-solid border-2 cursor-pointer border-gray-400 bg-white'>
               {isOpen ? (
                 <ChevronUp className='text-black ml-2' />
               ) : (
@@ -111,14 +127,14 @@ export default function SideBar() {
               <ul className='bg-white'>
                 <li>
                   <button
-                    className='bg-blue-400 text-white w-48 px-4 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white w-2/3 px-4 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewInput}>
                     Add Input
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-blue-400 text-white w-48 px-4 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white w-2/3 px-4 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewText}>
                     Add Text
                   </button>
@@ -127,7 +143,7 @@ export default function SideBar() {
             )}
           </div>
         </div>
-        <div className='max-h-fit border-solid border-2 border-gray-600 flex flex-col'>
+        <div className='max-h-fit border-solid border-2 w-3/4 border-gray-600 flex flex-col'>
           <div className=''>
             <div
               onClick={toggleNetworkDropdown}
@@ -145,23 +161,30 @@ export default function SideBar() {
               <ul className='bg-white'>
                 <li>
                   <button
-                    className='bg-red-500 text-white px-4 w-48 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-red-500 text-white px-4 w-2/3 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addHttps}>
                     Https
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-green-500 text-white px-4 w-48 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-green-500 text-white px-4 w-2/3 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewOutput}>
                     Status
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-blue-400 text-white px-4 w-48 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white px-4 w-2/3 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewText}>
                     Debug
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className='bg-blue-400 text-white px-4 w-2/3 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    onClick={addRunButton}>
+                    Run
                   </button>
                 </li>
               </ul>

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { setSelectedNode,getResponseNode } from "../redux/workFlow/FlowSlice";
+import { setSelectedNode, getResponseNode } from "../redux/workFlow/FlowSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 import { Inputs } from "react-hook-form";
@@ -23,23 +23,25 @@ const NodeForm = () => {
     dispatch(setSelectedNode(null));
   };
 
-
-
   if (!isOpen || !selectedNode) {
     return null;
   }
 
   const sendRequest = async (data: Inputs) => {
-    const response = await axios(data.https, {
-      method: data.method,
-      headers: data.header,
-    });
-    console.log(response);
-    dispatch(getResponseNode(response));
+    try {
+      const response = await axios(data.https, {
+        method: data.method
+      });
+      console.log(response);
+      dispatch(getResponseNode({ data: response.data }));
+    } catch (error) {
+      console.error(error);
+      dispatch(getResponseNode({ data: { error: error.message } }));
+    }
   };
+
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     sendRequest(data);
-    
   };
 
   return (
@@ -70,30 +72,38 @@ const NodeForm = () => {
           />
         </div>
         <div className='mb-4'>
+          <label className='block text-gray-700'>Method</label>
           <select
             {...register("method", { required: true })}
-            className='block text-gray-700 px-3 py-2 border rounded'>
-            Method
+            className='block w-full px-3 py-2 border rounded'>
             <option value='GET'>GET</option>
             <option value='POST'>POST</option>
             <option value='PUT'>PUT</option>
             <option value='DELETE'>DELETE</option>
           </select>
+          {errors.method && (
+            <span className="text-red-500 text-sm">This field is required</span>
+          )}
         </div>
         <div className='mb-4'>
-          <label className='block text-gray-700'>https</label>
+          <label className='block text-gray-700'>HTTPS</label>
           <input
             {...register("https", { required: true })}
             className='w-full px-3 py-2 border rounded'
           />
-        {errors.https && <span className="text-red-500 text-sm">This field is required</span>}
+          {errors.https && (
+            <span className="text-red-500 text-sm">This field is required</span>
+          )}
         </div>
         <div className='mb-4'>
-          <label className='block text-gray-700'>headers</label>
+          <label className='block text-gray-700'>Headers (JSON format)</label>
           <input
-            {...register("header", { required: true })}
+            {...register("header")}
             className='w-full px-3 py-2 border rounded'
           />
+          {errors.header && (
+            <span className="text-red-500 text-sm">This field is required</span>
+          )}
         </div>
         <div>
           <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-green-400 hover:text-white'>
