@@ -36,7 +36,6 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
-
   const addNewInput = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
@@ -47,7 +46,6 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
-
   const addHttps = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
@@ -63,7 +61,7 @@ export default function SideBar() {
       id: `node-${nodes.length + 1}`,
       type: "output",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
-      data: { label: "Response" },
+      data: { label: "Response" ,outputPorts: []},
     };
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
@@ -80,17 +78,17 @@ export default function SideBar() {
         <h2 className='text-2xl font-bold mb-4'>Variant:</h2>
         <div className='space-x-2'>
           <button
-            className='bg-white text-black px-4 py-2 rounded-md'
+            className='px-2 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
             onClick={() => dispatch(setVariant("dots"))}>
             Dots
           </button>
           <button
-            className='bg-white text-black px-4 py-2 rounded-md'
+            className='px-2 bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
             onClick={() => dispatch(setVariant("lines"))}>
             Lines
           </button>
           <button
-            className='bg-white text-black px-4 py-2 rounded-md'
+            className='px-2 bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
             onClick={() => dispatch(setVariant("cross"))}>
             Cross
           </button>

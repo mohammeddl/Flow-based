@@ -8,7 +8,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(getNodesLocalStorage());
-  }, []);
+  }, [dispatch]);
   return (
     <>
       <SideBar />

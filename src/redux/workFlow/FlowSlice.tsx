@@ -28,8 +28,10 @@ const flowSlice = createSlice({
       state.selectedNode = action.payload;
     },
     getNodesLocalStorage: (state) => {
-      const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "") || [];
+      const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "[]");
+      const storedEdges = JSON.parse(localStorage.getItem("edges") ?? "[]");
       state.nodes = storedNodes;
+      state.edges = storedEdges;
     },
     getResponseNode:(state, action) => {
       state.responseNode = action.payload;

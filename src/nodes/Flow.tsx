@@ -56,11 +56,13 @@ function Flow() {
 
   const onConnect = useCallback(
     (params) => {
-      dispatch(setEdges(addEdge(params, edges)));
-
+      const updatedEdges = addEdge(params, edges);
+      dispatch(setEdges(updatedEdges));
+      localStorage.setItem("edges", JSON.stringify(updatedEdges));
+  
       const sourceNode = nodes.find((node) => node.id === params.source);
       const targetNode = nodes.find((node) => node.id === params.target);
-
+  
       if (sourceNode.type === "input" && targetNode.type === "output") {
         const responseData = {
           data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
@@ -71,6 +73,7 @@ function Flow() {
     },
     [edges, nodes, dispatch]
   );
+  
 
   const onNodeClick = useCallback(
     (event, node) => {
