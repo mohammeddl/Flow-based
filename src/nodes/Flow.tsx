@@ -27,10 +27,28 @@ function Flow() {
   const edges = useSelector((state) => state.flow.edges);
   const variant = useSelector((state) => state.flow.variant);
 
+  const updateNodePositionInLocalStorage = (node) => {
+    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
+    const updatedNodes = storedNodes.map((storedNode) =>
+      storedNode.id === node.id ? { ...storedNode, position: node.position } : storedNode
+    );
+    localStorage.setItem("nodes", JSON.stringify(updatedNodes));
+  };
+
   const onNodesChange = useCallback(
-    (changes) => dispatch(setNodes(applyNodeChanges(changes, nodes))),
+    (changes) => {
+      const updatedNodes = applyNodeChanges(changes, nodes);
+      dispatch(setNodes(updatedNodes));
+      changes.forEach((change) => {
+        if (change.type === "position" && change.position) {
+          const movedNode = updatedNodes.find((node) => node.id === change.id);
+          updateNodePositionInLocalStorage(movedNode);
+        }
+      });
+    },
     [nodes, dispatch]
   );
+
   const onEdgesChange = useCallback(
     (changes) => dispatch(setEdges(applyEdgeChanges(changes, edges))),
     [edges, dispatch]
