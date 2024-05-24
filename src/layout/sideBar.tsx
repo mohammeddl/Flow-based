@@ -117,7 +117,7 @@ export default function SideBar() {
               {isOpen ? (
                 <ChevronUp className='text-black ml-2' />
               ) : (
-                <ChevronDown className='text-black ml-2' />
+                <ChevronDown className='text-black ml-2' /> 
               )}
               <button className='bg-white text-black py-2  rounded-md'>
                 Nodes
