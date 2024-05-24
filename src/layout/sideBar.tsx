@@ -119,7 +119,7 @@ export default function SideBar() {
               ) : (
                 <ChevronDown className='text-black ml-2' />
               )}
-              <button className='bg-white text-black py-2 my-4 rounded-md'>
+              <button className='bg-white text-black py-2  rounded-md'>
                 Nodes
               </button>
             </div>
@@ -153,7 +153,7 @@ export default function SideBar() {
               ) : (
                 <ChevronDown className='text-black ml-2' />
               )}
-              <button className='bg-white text-black py-2 my-4 rounded-md '>
+              <button className='bg-white text-black py-2  rounded-md '>
                 Network
               </button>
             </div>

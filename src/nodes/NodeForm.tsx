@@ -1,9 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
-import { setSelectedNode, getResponseNode } from "../redux/workFlow/FlowSlice";
+import { setSelectedNode, setNodes } from "../redux/workFlow/FlowSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
-import axios from "axios";
-import { Inputs } from "react-hook-form";
 
 const NodeForm = () => {
   const {
@@ -11,10 +9,11 @@ const NodeForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm();
 
   const dispatch = useDispatch();
   const selectedNode = useSelector((state) => state.flow.selectedNode);
+  const nodes = useSelector((state) => state.flow.nodes);
 
   const [isOpen, setIsOpen] = useState(true);
 
@@ -27,21 +26,14 @@ const NodeForm = () => {
     return null;
   }
 
-  const sendRequest = async (data: Inputs) => {
-    try {
-      const response = await axios(data.https, {
-        method: data.method
-      });
-      console.log(response);
-      dispatch(getResponseNode({ data: response.data }));
-    } catch (error) {
-      console.error(error);
-      dispatch(getResponseNode({ data: { error: error.message } }));
-    }
-  };
-
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
-    sendRequest(data);
+  const onSubmit = (data) => {
+    const updatedNodes = nodes.map((node) =>
+      node.id === selectedNode.id
+        ? { ...node, data: { ...node.data, ...data } }
+        : node
+    );
+    dispatch(setNodes(updatedNodes));
+    dispatch(setSelectedNode(null));
   };
 
   return (
@@ -107,7 +99,7 @@ const NodeForm = () => {
         </div>
         <div>
           <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-green-400 hover:text-white'>
-            Send
+            Save
           </button>
         </div>
       </form>

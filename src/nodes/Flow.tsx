@@ -14,10 +14,12 @@ import {
   setNodes,
   setEdges,
   setSelectedNode,
-  getResponseNode,
+  addResponseNode,
+  clearResponseNodes,
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
+import axios from "axios";
 
 const nodeTypes = { textUpdater: TextUpdaterNode };
 
@@ -69,24 +71,34 @@ function Flow() {
         const responseData = {
           data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
         };
-
-        dispatch(getResponseNode(responseData));
       }
     },
     [edges, nodes, dispatch]
   );
 
   const onNodeClick = useCallback(
-    (event, node) => {
+    async (event, node) => {
       if (node.type === "input") {
         dispatch(setSelectedNode(node));
       }
       if (node.data.label === "Run") {
-        const responseNode = nodes.find(
-          (n) => n.type === "output" && n.data.label === "Response"
+        const inputNodes = nodes.filter(
+          (n) => n.type === "input" && n.data.label !== "Run"
         );
-        if (responseNode) {
-          dispatch(getResponseNode(responseNode.data));
+        dispatch(clearResponseNodes()); // Clear previous responses
+        for (const inputNode of inputNodes) {
+          try {
+            const response = await axios(inputNode.data.https, {
+              method: inputNode.data.method,
+            });
+            console.log(response);
+            dispatch(addResponseNode({ data: response.data, id: inputNode.id }));
+          } catch (error) {
+            console.error(error);
+            dispatch(
+              addResponseNode({ data: { error: error.message }, id: inputNode.id })
+            );
+          }
         }
       }
     },
@@ -120,16 +132,17 @@ function Flow() {
       onNodeClick={onNodeClick}
       style={rfStyle}
       nodeTypes={nodeTypes}
-      attributionPosition='top-right'
-      fitView>
+      attributionPosition="top-right"
+      fitView
+    >
       <MiniMap
-        className='bg-blue-200'
+        className="bg-blue-200"
         nodeColor={nodeColor}
         nodeStrokeWidth={3}
         zoomable
         pannable
       />
-      <Background color='#ccc' variant={variant} />
+      <Background color="#ccc" variant={variant} />
       <Controls />
     </ReactFlow>
   );
