@@ -19,9 +19,11 @@ import {
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
+// import SelectorNode from "./SelectorNode"; 
+
 import axios from "axios";
 
-const nodeTypes = { textUpdater: TextUpdaterNode };
+const nodeTypes = { textUpdater: TextUpdaterNode};
 
 function Flow() {
   const dispatch = useDispatch();
@@ -85,7 +87,7 @@ function Flow() {
         const inputNodes = nodes.filter(
           (n) => n.type === "input" && n.data.label !== "Run"
         );
-        dispatch(clearResponseNodes()); // Clear previous responses
+        dispatch(clearResponseNodes());
         for (const inputNode of inputNodes) {
           try {
             const response = await axios(inputNode.data.https, {

@@ -5,12 +5,15 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
+import { motion } from "framer-motion";
 
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
   const selectedNode = useSelector((state) => state.flow.selectedNode);
-  const getResponseNode = useSelector((state) => state.flow.responseNode);
+  const getResponseNode = useSelector((state) => state.flow.responseNodes);
+
+
 
   const addNodeToLocalStorage = (newNode) => {
     const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
@@ -109,7 +112,7 @@ export default function SideBar() {
             Cross
           </button>
         </div>
-        <div className='max-h-fit border-solid w-3/4 border-2 my-2 border-gray-600 flex flex-col'>
+        <div className='max-h-fit border-solid w-4/4 border-2 my-2 border-gray-600 flex flex-col'>
           <div className='dropdown'>
             <div
               onClick={toggleDropdown}
@@ -127,14 +130,14 @@ export default function SideBar() {
               <ul className='bg-white'>
                 <li>
                   <button
-                    className='bg-blue-400 text-white w-2/3 px-4 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white w-2/3 text-sm px-3 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewInput}>
                     Add Input
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-blue-400 text-white w-2/3 px-4 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white text-sm w-2/3 px-4 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewText}>
                     Add Text
                   </button>
@@ -143,7 +146,7 @@ export default function SideBar() {
             )}
           </div>
         </div>
-        <div className='max-h-fit border-solid border-2 w-3/4 border-gray-600 flex flex-col'>
+        <div className='max-h-fit border-solid border-2 w-4/4 border-gray-600 flex flex-col'>
           <div className=''>
             <div
               onClick={toggleNetworkDropdown}

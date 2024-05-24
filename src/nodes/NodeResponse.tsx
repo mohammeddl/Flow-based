@@ -17,6 +17,7 @@ export default function NodeResponse() {
     return null;
   }
 
+
   return (
     <div className="p-4 bg-blue-200 border rounded shadow-md ">
       <div className="flex justify-end">
