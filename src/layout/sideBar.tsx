@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
 
 export default function SideBar() {
   const dispatch = useDispatch();
