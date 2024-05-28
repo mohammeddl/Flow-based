@@ -78,7 +78,7 @@ export default function SideBar() {
   };
   const addNewOutput = () => {
     const newNode = {
-      id: `node-${nodes.length + 1}`,
+      id: `nodeRes-${nodes.length + 1}`,
       type: "selectorNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "Response", outputPorts: [] },

@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
 import { deleteNode } from "../redux/workFlow/FlowSlice";
+import { Trash2 } from "lucide-react";
+import { Handle } from "reactflow";
 
 const SelectorNode = ({ id, data }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
-    // Remove node from local storage
     const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
     const updatedNodes = storedNodes.filter((node) => node.id !== id);
     localStorage.setItem("nodes", JSON.stringify(updatedNodes));
@@ -19,18 +20,26 @@ const SelectorNode = ({ id, data }) => {
   };
 
   return (
-    <div
-      style={{
-        padding: "10px",
-        border: "1px solid #777",
-        borderRadius: "10px",
-        backgroundColor: "#f0f0f0",
-      }}
-    >
-      <strong>{data.label}</strong>
-      <button onClick={handleDelete} style={{ marginTop: 10 }}>
-        Delete
+    <div className="relative p-2 border border-gray-400 rounded-lg bg-gray-100 flex flex-col items-center">
+      <Handle
+        type="target"
+        position="top"
+        id="a"
+        className="w-2 h-2 bg-gray-500 border-none rounded-full"
+      />
+      <strong className="text-sm">{data.label}</strong>
+      <button
+        className="mt-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+        onClick={handleDelete}
+      >
+        <Trash2 className="w-4 h-4" />
       </button>
+      <Handle
+        type="source"
+        position="bottom"
+        id="b"
+        className="w-2 h-2 bg-gray-500 border-none rounded-full"
+      />
     </div>
   );
 };
