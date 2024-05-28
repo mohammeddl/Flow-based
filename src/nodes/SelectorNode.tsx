@@ -25,20 +25,20 @@ const SelectorNode = ({ id, data }) => {
         type="target"
         position="top"
         id="a"
-        className="w-2 h-2 bg-gray-500 border-none rounded-full"
+        className="w-2 h-2 bg-gray-800 border-none rounded-full"
       />
-      <strong className="text-sm">{data.label}</strong>
+      <p className="text-sm">{data.label}</p>
       <button
         className="mt-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
         onClick={handleDelete}
       >
-        <Trash2 className="w-4 h-4" />
+        <Trash2 className="w-2 h-2" />
       </button>
       <Handle
         type="source"
         position="bottom"
         id="b"
-        className="w-2 h-2 bg-gray-500 border-none rounded-full"
+        className="w-2 h-2 bg-gray-800 border-none rounded-full"
       />
     </div>
   );

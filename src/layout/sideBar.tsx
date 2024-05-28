@@ -5,15 +5,13 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
-import selectorNode from "../nodes/SelectorNode";
+
 
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
   const selectedNode = useSelector((state) => state.flow.selectedNode);
   const getResponseNode = useSelector((state) => state.flow.responseNodes);
-
-
 
   const addNodeToLocalStorage = (newNode) => {
     const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
@@ -34,7 +32,6 @@ export default function SideBar() {
         backgroundColor: "#f0f0f0",
         borderRadius: 10,
       },
-      
     };
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
@@ -58,7 +55,7 @@ export default function SideBar() {
   };
   const addNewInput = () => {
     const newNode = {
-      id: `node-${nodes.length + 1}`,
+      id: `nodeInp-${nodes.length + 1}`,
       type: "input",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "input node" },
@@ -68,7 +65,7 @@ export default function SideBar() {
   };
   const addHttps = () => {
     const newNode = {
-      id: `node-${nodes.length + 1}`,
+      id: `nodeHtt-${nodes.length + 1}`,
       type: "input",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "Https" },
@@ -92,13 +89,11 @@ export default function SideBar() {
   const [isOpenNetwork, setIsOpenNetwork] = useState(false);
   const toggleNetworkDropdown = () => setIsOpenNetwork(!isOpenNetwork);
 
-  
-
   return (
     <div className='h-screen flex'>
       <div className='flex flex-col bg-blue-500 p-4 text-white w-1/6'>
         <h2 className='text-2xl font-bold mb-4'>Variant:</h2>
-        <div className='space-x-2'>
+        <div className='space-x-2 flex justify-between'>
           <button
             className='px-2 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
             onClick={() => dispatch(setVariant("dots"))}>
@@ -123,7 +118,7 @@ export default function SideBar() {
               {isOpen ? (
                 <ChevronUp className='text-black ml-2' />
               ) : (
-                <ChevronDown className='text-black ml-2' /> 
+                <ChevronDown className='text-black ml-2' />
               )}
               <button className='bg-white text-black py-2  rounded-md'>
                 Nodes
@@ -164,31 +159,31 @@ export default function SideBar() {
               </button>
             </div>
             {isOpenNetwork && (
-              <ul className='bg-white '>
+              <ul className='bg-white flex flex-col items-center '>
                 <li>
                   <button
-                    className='bg-red-500 text-white px-4 w-2/3 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-red-500 text-white lg:px-12 px-5  py-2 m-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addHttps}>
                     Https
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-green-500 text-white px-4 w-2/3 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-green-500 text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewOutput}>
                     Status
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-blue-400 text-white px-4 w-2/3 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white lg:px-12 px-4  py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addNewText}>
                     Debug
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-blue-400 text-white px-4 w-2/3 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='bg-blue-400 text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addRunButton}>
                     Run
                   </button>
