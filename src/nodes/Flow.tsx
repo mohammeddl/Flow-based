@@ -16,14 +16,14 @@ import {
   setSelectedNode,
   addResponseNode,
   clearResponseNodes,
+  deleteNode,
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
-// import SelectorNode from "./SelectorNode"; 
-
+import SelectorNode from "./SelectorNode";
 import axios from "axios";
 
-const nodeTypes = { textUpdater: TextUpdaterNode};
+const nodeTypes = { textUpdater: TextUpdaterNode, selectorNode: SelectorNode };
 
 function Flow() {
   const dispatch = useDispatch();
@@ -45,6 +45,7 @@ function Flow() {
     (changes) => {
       const updatedNodes = applyNodeChanges(changes, nodes);
       dispatch(setNodes(updatedNodes));
+      localStorage.setItem("nodes", JSON.stringify(updatedNodes));
       changes.forEach((change) => {
         if (change.type === "position" && change.position) {
           const movedNode = updatedNodes.find((node) => node.id === change.id);
@@ -56,7 +57,11 @@ function Flow() {
   );
 
   const onEdgesChange = useCallback(
-    (changes) => dispatch(setEdges(applyEdgeChanges(changes, edges))),
+    (changes) => {
+      const updatedEdges = applyEdgeChanges(changes, edges);
+      dispatch(setEdges(updatedEdges));
+      localStorage.setItem("edges", JSON.stringify(updatedEdges));
+    },
     [edges, dispatch]
   );
 
@@ -123,10 +128,11 @@ function Flow() {
         return "#ff0072";
     }
   };
+
   const edgeOptions = {
     animated: true,
     style: {
-      stroke: 'black',
+      stroke: "black",
     },
   };
 

@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
-// import { motion } from "framer-motion";
+import selectorNode from "../nodes/SelectorNode";
 
 export default function SideBar() {
   const dispatch = useDispatch();
@@ -16,7 +16,7 @@ export default function SideBar() {
 
 
   const addNodeToLocalStorage = (newNode) => {
-    const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "") || [];
+    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
     storedNodes.push(newNode);
     localStorage.setItem("nodes", JSON.stringify(storedNodes));
   };
@@ -34,6 +34,7 @@ export default function SideBar() {
         backgroundColor: "#f0f0f0",
         borderRadius: 10,
       },
+      
     };
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
@@ -41,13 +42,13 @@ export default function SideBar() {
   const addRunButton = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
-      type: "selectorNode",
+      type: "output",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "Run" },
       style: {
         border: "1px solid #777",
         padding: 10,
-        width: 200,
+        width: 150,
         backgroundColor: "#f0f0f0",
         borderRadius: 10,
       },
@@ -78,7 +79,7 @@ export default function SideBar() {
   const addNewOutput = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
-      type: "output",
+      type: "selectorNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "Response", outputPorts: [] },
     };
@@ -163,7 +164,7 @@ export default function SideBar() {
               </button>
             </div>
             {isOpenNetwork && (
-              <ul className='bg-white'>
+              <ul className='bg-white '>
                 <li>
                   <button
                     className='bg-red-500 text-white px-4 w-2/3 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
