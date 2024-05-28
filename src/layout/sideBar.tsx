@@ -16,7 +16,7 @@ export default function SideBar() {
 
 
   const addNodeToLocalStorage = (newNode) => {
-    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
+    const storedNodes = JSON.parse(localStorage.getItem("nodes") ?? "") || [];
     storedNodes.push(newNode);
     localStorage.setItem("nodes", JSON.stringify(storedNodes));
   };
@@ -90,6 +90,8 @@ export default function SideBar() {
   const toggleDropdown = () => setIsOpen(!isOpen);
   const [isOpenNetwork, setIsOpenNetwork] = useState(false);
   const toggleNetworkDropdown = () => setIsOpenNetwork(!isOpenNetwork);
+
+  
 
   return (
     <div className='h-screen flex'>
@@ -202,7 +204,7 @@ export default function SideBar() {
             <NodeForm />
           </div>
         )}
-        {getResponseNode && (
+        {getResponseNode.length && (
           <div className='w-2/5 bg-gray-100 p-4 '>
             <NodeResponse />
           </div>

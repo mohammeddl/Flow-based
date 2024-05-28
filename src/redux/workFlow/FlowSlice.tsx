@@ -5,7 +5,7 @@ const initialState = {
   edges: [],
   variant: "cross",
   selectedNode: null,
-  responseNodes: null, 
+  responseNodes: [], 
 };
 
 const flowSlice = createSlice({
