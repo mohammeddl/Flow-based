@@ -123,6 +123,12 @@ function Flow() {
         return "#ff0072";
     }
   };
+  const edgeOptions = {
+    animated: true,
+    style: {
+      stroke: 'black',
+    },
+  };
 
   return (
     <ReactFlow
@@ -134,6 +140,7 @@ function Flow() {
       onNodeClick={onNodeClick}
       style={rfStyle}
       nodeTypes={nodeTypes}
+      defaultEdgeOptions={edgeOptions}
       attributionPosition="top-right"
       fitView
     >
