@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
-
+// import selectorNode from "../nodes/SelectorNode";
 
 export default function SideBar() {
   const dispatch = useDispatch();
@@ -66,7 +66,7 @@ export default function SideBar() {
   const addHttps = () => {
     const newNode = {
       id: `nodeHtt-${nodes.length + 1}`,
-      type: "input",
+      type: "httpsNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "Https" },
     };

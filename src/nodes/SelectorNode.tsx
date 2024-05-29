@@ -40,6 +40,7 @@ const SelectorNode = ({ id, data }) => {
         id="b"
         className="w-2 h-2 bg-gray-800 border-none rounded-full"
       />
+      
     </div>
   );
 };

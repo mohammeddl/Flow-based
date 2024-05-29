@@ -8,7 +8,7 @@ import ReactFlow, {
 } from "reactflow";
 import "reactflow/dist/style.css";
 
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setNodes,
@@ -17,13 +17,19 @@ import {
   addResponseNode,
   clearResponseNodes,
   deleteNode,
+  setDisplayedResponse,
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
 import SelectorNode from "./SelectorNode";
+import httpsNode from "./httpsNode";
 import axios from "axios";
 
-const nodeTypes = { textUpdater: TextUpdaterNode, selectorNode: SelectorNode };
+const nodeTypes = {
+  textUpdater: TextUpdaterNode,
+  selectorNode: SelectorNode,
+  httpsNode: httpsNode,
+};
 
 function Flow() {
   const dispatch = useDispatch();
@@ -82,15 +88,36 @@ function Flow() {
     },
     [edges, nodes, dispatch]
   );
-
+  const [res, setRes] = useState([]);
   const onNodeClick = useCallback(
     async (event, node) => {
-      if (node.type === "input") {
+      if (node.type === "httpsNode") {
         dispatch(setSelectedNode(node));
-      }
-      if (node.data.label === "Run") {
+      } else if (node.type === "selectorNode") {
+        dispatch(clearResponseNodes());
+        dispatch(addResponseNode({ data: res, id: node.id }));
+        for (const inputNode of inputNodes) {
+          try {
+            const response = await axios(inputNode.data.https, {
+              method: inputNode.data.method,
+            });
+            console.log(response);
+            dispatch(
+              addResponseNode({ data: response.data, id: inputNode.id })
+            );
+          } catch (error) {
+            console.error(error);
+            dispatch(
+              addResponseNode({
+                data: { error: error.message },
+                id: inputNode.id,
+              })
+            );
+          }
+        }
+      } else if (node.data.label === "Run") {
         const inputNodes = nodes.filter(
-          (n) => n.type === "input" && n.data.label !== "Run"
+          (n) => n.type === "httpsNode" && n.data.label !== "Run"
         );
         dispatch(clearResponseNodes());
         for (const inputNode of inputNodes) {
@@ -99,12 +126,9 @@ function Flow() {
               method: inputNode.data.method,
             });
             console.log(response);
-            dispatch(addResponseNode({ data: response.data, id: inputNode.id }));
+            setRes(response.data);
           } catch (error) {
             console.error(error);
-            dispatch(
-              addResponseNode({ data: { error: error.message }, id: inputNode.id })
-            );
           }
         }
       }
@@ -147,17 +171,16 @@ function Flow() {
       style={rfStyle}
       nodeTypes={nodeTypes}
       defaultEdgeOptions={edgeOptions}
-      attributionPosition="top-right"
-      fitView
-    >
+      attributionPosition='top-right'
+      fitView>
       <MiniMap
-        className="bg-blue-200"
+        className='bg-blue-200'
         nodeColor={nodeColor}
         nodeStrokeWidth={3}
         zoomable
         pannable
       />
-      <Background color="#ccc" variant={variant} />
+      <Background color='#ccc' variant={variant} />
       <Controls />
     </ReactFlow>
   );

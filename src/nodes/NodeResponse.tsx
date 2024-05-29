@@ -17,9 +17,8 @@ export default function NodeResponse() {
     return null;
   }
 
-
   return (
-    <div className="p-4 bg-blue-200 border rounded shadow-md max-h-full ">
+    <div className="p-4 bg-blue-200 border rounded shadow-md max-h-full">
       <div className="flex justify-end">
         <button onClick={toggleForm} className="text-gray-500">
           X
@@ -32,7 +31,11 @@ export default function NodeResponse() {
             <h3 className="font-bold">Response from Node {response.id}:</h3>
             <p className="w-1/2">{JSON.stringify(response.data, null, 2)}</p>
             {response.data.message && (
-              <img className="h-fit" src={response.data.message} alt="response" />
+              <img
+                className="h-fit"
+                src={response.data.message}
+                alt="response"
+              />
             )}
           </div>
         ))}
