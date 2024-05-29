@@ -4,7 +4,7 @@ const initialState = {
   nodes: [],
   edges: [],
   variant: "cross",
-  selectedNode: [],
+  selectedNode: null,
   responseNodes: [],
   displayedResponseNodeId: null,
 };
