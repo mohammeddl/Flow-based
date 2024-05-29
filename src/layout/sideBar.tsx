@@ -22,7 +22,7 @@ export default function SideBar() {
   const addNewText = () => {
     const newNode = {
       id: `node-${nodes.length + 1}`,
-      type: "selectorNode",
+      type: "input",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "More" },
       style: {
@@ -92,7 +92,7 @@ export default function SideBar() {
   return (
     <div className='h-screen flex'>
       <div className='flex flex-col bg-blue-500 p-4 text-white w-1/6'>
-        <h2 className='text-2xl font-bold mb-4'>Variant:</h2>
+        <h2 className='text-2xl font-bold mb-1'>Variant:</h2>
         <div className='space-x-2 flex justify-between'>
           <button
             className='px-2 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md'
@@ -174,13 +174,7 @@ export default function SideBar() {
                     Status
                   </button>
                 </li>
-                <li>
-                  <button
-                    className='bg-blue-400 text-white lg:px-12 px-4  py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addNewText}>
-                    Debug
-                  </button>
-                </li>
+
                 <li>
                   <button
                     className='bg-blue-400 text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
@@ -201,7 +195,7 @@ export default function SideBar() {
           </div>
         )}
         {getResponseNode.length && (
-          <div className='w-2/5 bg-gray-100 p-4 '>
+          <div className='w-2/5 bg-[#f0f0f0] p-4 '>
             <NodeResponse />
           </div>
         )}

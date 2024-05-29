@@ -96,25 +96,7 @@ function Flow() {
       } else if (node.type === "selectorNode") {
         dispatch(clearResponseNodes());
         dispatch(addResponseNode({ data: res, id: node.id }));
-        for (const inputNode of inputNodes) {
-          try {
-            const response = await axios(inputNode.data.https, {
-              method: inputNode.data.method,
-            });
-            console.log(response);
-            dispatch(
-              addResponseNode({ data: response.data, id: inputNode.id })
-            );
-          } catch (error) {
-            console.error(error);
-            dispatch(
-              addResponseNode({
-                data: { error: error.message },
-                id: inputNode.id,
-              })
-            );
-          }
-        }
+       
       } else if (node.data.label === "Run") {
         const inputNodes = nodes.filter(
           (n) => n.type === "httpsNode" && n.data.label !== "Run"
@@ -142,7 +124,7 @@ function Flow() {
 
   const nodeColor = (node) => {
     switch (node.type) {
-      case "input":
+      case "httpsNode":
         return "#6ede87";
       case "output":
         return "#6865A5";
