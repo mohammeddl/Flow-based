@@ -53,16 +53,7 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
-  const addNewInput = () => {
-    const newNode = {
-      id: `nodeInp-${nodes.length + 1}`,
-      type: "input",
-      position: { x: Math.random() * 600, y: Math.random() * 400 },
-      data: { label: "input node" },
-    };
-    addNodeToLocalStorage(newNode);
-    dispatch(addNode(newNode));
-  };
+  
   const addHttps = () => {
     const newNode = {
       id: `nodeHtt-${nodes.length + 1}`,
@@ -126,13 +117,6 @@ export default function SideBar() {
             </div>
             {isOpen && (
               <ul className='bg-white'>
-                <li>
-                  <button
-                    className='bg-blue-400 text-white w-2/3 text-sm px-3 py-2 m-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addNewInput}>
-                    Add Input
-                  </button>
-                </li>
                 <li>
                   <button
                     className='bg-blue-400 text-white text-sm w-2/3 px-4 py-2 ml-4 mb-4 rounded-md border-solid border-2 border-gray-300'
