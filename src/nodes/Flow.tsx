@@ -71,7 +71,7 @@ function Flow() {
     [edges, dispatch]
   );
 
-  function spesicNode(targetId, nodes, sourceId) {
+  function specificNode(targetId, nodes, sourceId) {
     const sourceNode = nodes.find((node) => node.id === sourceId);
     const targetNode = nodes.find((node) => node.id === targetId);
 
@@ -81,7 +81,7 @@ function Flow() {
       };
     }
   }
-  
+
 
   const onConnect = useCallback(
     (params) => {
