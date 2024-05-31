@@ -5,7 +5,7 @@ const initialState = {
   edges: [],
   variant: "cross",
   selectedNode: null,
-  responseNodes: [],
+  responseNodes: {},
   displayedResponseNodeId: null,
 };
 
@@ -35,10 +35,10 @@ const flowSlice = createSlice({
       state.edges = storedEdges;
     },
     addResponseNode: (state, action) => {
-      state.responseNodes.push(action.payload);
+      state.responseNodes = action.payload;
     },
     clearResponseNodes: (state) => {
-      state.responseNodes = [];
+      state.responseNodes = {};
     },
     deleteNode: (state, action) => {
       const nodeId = action.payload;

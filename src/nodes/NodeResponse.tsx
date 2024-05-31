@@ -26,19 +26,17 @@ export default function NodeResponse() {
       </div>
       <h2 className="text-xl font-bold mb-4">Node Responses</h2>
       <div>
-        {responseNodes.map((response, index) => (
-          <div key={index} className="mb-4 ">
-            <h3 className="font-bold">Response from Node {response.id}:</h3>
-            <p className="w-1/2 ">{JSON.stringify(response.data, null, 2)}</p>
-            {response.data.message && (
+          <div className="mb-4 ">
+            <h3 className="font-bold">Response from Node {responseNodes.id}:</h3>
+            <p className="w-1/2 ">{JSON.stringify(responseNodes.data, null, 2)}</p>
+            {responseNodes.data.message && (
               <img
                 className="h-fit"
-                src={response.data.message}
+                src={responseNodes.data.message}
                 alt="response"
               />
             )}
           </div>
-        ))}
       </div>
     </div>
   );

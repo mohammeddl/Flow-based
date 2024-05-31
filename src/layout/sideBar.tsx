@@ -178,7 +178,7 @@ export default function SideBar() {
             <NodeForm />
           </div>
         )}
-        {getResponseNode.length && (
+        {getResponseNode.id && (
           <div className='w-2/5 bg-[#f0f0f0] p-4 '>
             <NodeResponse />
           </div>

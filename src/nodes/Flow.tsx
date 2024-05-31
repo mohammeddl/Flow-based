@@ -71,6 +71,18 @@ function Flow() {
     [edges, dispatch]
   );
 
+  function spesicNode(targetId, nodes, sourceId) {
+    const sourceNode = nodes.find((node) => node.id === sourceId);
+    const targetNode = nodes.find((node) => node.id === targetId);
+
+    if (sourceNode.type === "input" && targetNode.type === "output") {
+      const responseData = {
+        data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
+      };
+    }
+  }
+  
+
   const onConnect = useCallback(
     (params) => {
       const updatedEdges = addEdge(params, edges);
@@ -88,30 +100,43 @@ function Flow() {
     },
     [edges, nodes, dispatch]
   );
-  const [res, setRes] = useState([]);
+  // const [res, setRes] = useState([]);
   const onNodeClick = useCallback(
     async (event, node) => {
       if (node.type === "httpsNode") {
         dispatch(setSelectedNode(node));
       } else if (node.type === "selectorNode") {
         dispatch(clearResponseNodes());
-        dispatch(addResponseNode({ data: res, id: node.id }));
-       
-      } else if (node.data.label === "Run") {
-        const inputNodes = nodes.filter(
-          (n) => n.type === "httpsNode" && n.data.label !== "Run"
+        dispatch(
+          addResponseNode({ data: node.data.outputPorts[0], id: node.id })
         );
+      } else if (node.data.label === "Run") {
+        const httpsNode = nodes.find(
+          // check for the one that's connect with the run button
+          (n) =>
+            edges.some((e) => e.source === n.id && e.target === node.id) &&
+            n.type === "httpsNode"
+        );
+
+        console.log("test run", httpsNode);
         dispatch(clearResponseNodes());
-        for (const inputNode of inputNodes) {
-          try {
-            const response = await axios(inputNode.data.https, {
-              method: inputNode.data.method,
-            });
-            console.log(response);
-            setRes(response.data);
-          } catch (error) {
-            console.error(error);
-          }
+        try {
+          const response = await axios(httpsNode.data.https, {
+            method: httpsNode.data.method,
+          });
+          const responseNode = nodes.find(
+            (n) =>{
+              console.log(n)
+              n.type === "selectorNode" &&
+              edges.some((e) => e.source === n.id && e.target)
+            }
+          );
+
+          // node.data.outputPorts = [{ ...response.data }];
+          console.log("node ", responseNode);
+          // setRes(response.data);
+        } catch (error) {
+          console.error(error);
         }
       }
     },
