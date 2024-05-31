@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { setSelectedNode, setNodes } from "../redux/workFlow/FlowSlice";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { THttpForm } from "../types";
 
 const NodeForm = () => {
   const {
@@ -9,7 +10,7 @@ const NodeForm = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm<THttpForm>();
 
   const dispatch = useDispatch();
   const selectedNode = useSelector((state) => state.flow.selectedNode);

@@ -71,17 +71,10 @@ function Flow() {
     [edges, dispatch]
   );
 
-  function specificNode(targetId, nodes, sourceId) {
-    const sourceNode = nodes.find((node) => node.id === sourceId);
-    const targetNode = nodes.find((node) => node.id === targetId);
-
-    if (sourceNode.type === "input" && targetNode.type === "output") {
-      const responseData = {
-        data: `Connected ${sourceNode.data.label} to ${targetNode.data.label}`,
-      };
-    }
+  function getSourceByTarget(targetId: string, nodes: any) {
+    const edge = edges.find((edge) => edge.target === targetId);
+    return nodes.find((node) => node.id === edge.source);
   }
-
 
   const onConnect = useCallback(
     (params) => {
@@ -107,34 +100,23 @@ function Flow() {
         dispatch(setSelectedNode(node));
       } else if (node.type === "selectorNode") {
         dispatch(clearResponseNodes());
-        dispatch(
-          addResponseNode({ data: node.data.outputPorts[0], id: node.id })
-        );
+        dispatch(addResponseNode({ data: node.response, id: node.id }));
       } else if (node.data.label === "Run") {
-        const httpsNode = nodes.find(
-          // check for the one that's connect with the run button
-          (n) =>
-            edges.some((e) => e.source === n.id && e.target === node.id) &&
-            n.type === "httpsNode"
-        );
+        const httpsNode = getSourceByTarget(node.id, nodes);
 
-        console.log("test run", httpsNode);
         dispatch(clearResponseNodes());
         try {
           const response = await axios(httpsNode.data.https, {
             method: httpsNode.data.method,
           });
-          const responseNode = nodes.find(
-            (n) =>{
-              console.log(n)
-              n.type === "selectorNode" &&
-              edges.some((e) => e.source === n.id && e.target)
-            }
-          );
+          let responseNode = getSourceByTarget(httpsNode.id, nodes);
 
-          // node.data.outputPorts = [{ ...response.data }];
-          console.log("node ", responseNode);
-          // setRes(response.data);
+          responseNode = { ...responseNode, response: { ...response.data } };
+
+          const updatedNodes = nodes.map((node) =>
+            node.id === responseNode.id ? responseNode : node
+          );
+          dispatch(setNodes(updatedNodes));
         } catch (error) {
           console.error(error);
         }

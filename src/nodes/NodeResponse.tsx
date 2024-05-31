@@ -28,7 +28,7 @@ export default function NodeResponse() {
       <div>
           <div className="mb-4 ">
             <h3 className="font-bold">Response from Node {responseNodes.id}:</h3>
-            <p className="w-1/2 ">{JSON.stringify(responseNodes.data, null, 2)}</p>
+            <p className="w-1/2 ">{JSON.stringify(responseNodes, null, 2)}</p>
             {responseNodes.data.message && (
               <img
                 className="h-fit"
