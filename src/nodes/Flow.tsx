@@ -17,7 +17,6 @@ import {
   addResponseNode,
   clearResponseNodes,
   deleteNode,
-  setDisplayedResponse,
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
@@ -93,7 +92,7 @@ function Flow() {
     },
     [edges, nodes, dispatch]
   );
-  // const [res, setRes] = useState([]);
+
   const onNodeClick = useCallback(
     async (event, node) => {
       if (node.type === "httpsNode") {
@@ -103,16 +102,13 @@ function Flow() {
         dispatch(addResponseNode({ data: node.response, id: node.id }));
       } else if (node.data.label === "Run") {
         const httpsNode = getSourceByTarget(node.id, nodes);
-
         dispatch(clearResponseNodes());
         try {
           const response = await axios(httpsNode.data.https, {
             method: httpsNode.data.method,
           });
           let responseNode = getSourceByTarget(httpsNode.id, nodes);
-
           responseNode = { ...responseNode, response: { ...response.data } };
-
           const updatedNodes = nodes.map((node) =>
             node.id === responseNode.id ? responseNode : node
           );
