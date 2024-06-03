@@ -5,7 +5,8 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
-// import selectorNode from "../nodes/SelectorNode";
+import { Node }from 'reactflow';
+ 
 
 export default function SideBar() {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ export default function SideBar() {
   };
 
   const addNewText = () => {
-    const newNode = {
+    const newNode: Node[] = {
       id: `node-${nodes.length + 1}`,
       type: "input",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -37,7 +38,7 @@ export default function SideBar() {
     dispatch(addNode(newNode));
   };
   const addRunButton = () => {
-    const newNode = {
+    const newNode:Node[] = {
       id: `node-${nodes.length + 1}`,
       type: "output",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -55,7 +56,7 @@ export default function SideBar() {
   };
   
   const addHttps = () => {
-    const newNode = {
+    const newNode:Node[] = {
       id: `nodeHtt-${nodes.length + 1}`,
       type: "httpsNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -65,7 +66,7 @@ export default function SideBar() {
     dispatch(addNode(newNode));
   };
   const addNewOutput = () => {
-    const newNode = {
+    const newNode:Node[] = {
       id: `nodeRes-${nodes.length + 1}`,
       type: "selectorNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },

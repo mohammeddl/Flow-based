@@ -5,6 +5,10 @@ import ReactFlow, {
   applyNodeChanges,
   addEdge,
   MiniMap,
+  Node,
+  Edge,
+  OnConnect,
+  OnNodesChange
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -16,7 +20,6 @@ import {
   setSelectedNode,
   addResponseNode,
   clearResponseNodes,
-  deleteNode,
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
@@ -32,8 +35,8 @@ const nodeTypes = {
 
 function Flow() {
   const dispatch = useDispatch();
-  const nodes = useSelector((state) => state.flow.nodes);
-  const edges = useSelector((state) => state.flow.edges);
+  const nodes:Node[] = useSelector((state) => state.flow.nodes);
+  const edges:Edge[] = useSelector((state) => state.flow.edges);
   const variant = useSelector((state) => state.flow.variant);
 
   const updateNodePositionInLocalStorage = (node) => {
@@ -46,7 +49,7 @@ function Flow() {
     localStorage.setItem("nodes", JSON.stringify(updatedNodes));
   };
 
-  const onNodesChange = useCallback(
+  const onNodesChange:OnNodesChange = useCallback(
     (changes) => {
       const updatedNodes = applyNodeChanges(changes, nodes);
       dispatch(setNodes(updatedNodes));
@@ -70,12 +73,12 @@ function Flow() {
     [edges, dispatch]
   );
 
-  function getSourceByTarget(targetId: string, nodes: any) {
+  function getSourceByTarget(targetId: string, nodes: Node[]) {
     const edge = edges.find((edge) => edge.target === targetId);
     return nodes.find((node) => node.id === edge.source);
   }
 
-  const onConnect = useCallback(
+  const onConnect:OnConnect = useCallback(
     (params) => {
       const updatedEdges = addEdge(params, edges);
       dispatch(setEdges(updatedEdges));
