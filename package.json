@@ -14,14 +14,17 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.6",
+    "lucide": "^0.396.0",
     "lucide-react": "^0.378.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.5",
     "react-redux": "^9.1.2",
     "reactflow": "^11.10.3",
+    "styled-components": "^6.1.11",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "twin.macro": "^3.4.1"
   },
   "license": "MIT",
   "devDependencies": {
@@ -35,7 +38,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.3",
+    "tailwindcss": "^3.4.4",
     "typescript": "^5.3.3",
     "vite": "^5.0.12"
   }

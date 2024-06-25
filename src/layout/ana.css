@@ -1,0 +1,14 @@
+.custom-box {
+    border-radius: 100px;
+    max-height: fit-content;
+    border-style: solid;
+    border-width: 2px;
+    width: 100%; /* Equivalent à w-4/4 de Tailwind */
+    border-color: #ea3232; /* Equivalent à border-gray-600 de Tailwind */
+    display: flex;
+    flex-direction: column;
+  }
+  .nodes{
+    background-color: #ea3232;
+    text-align: center;
+  }

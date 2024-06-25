@@ -11,7 +11,9 @@ export default function App() {
   }, [dispatch]);
   return (
     <>
+     <div style={{ height: 800 }}>
       <SideBar />
+      </div>
     </>
   );
 }
