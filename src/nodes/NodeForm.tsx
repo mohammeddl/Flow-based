@@ -47,15 +47,6 @@ const NodeForm = () => {
       <h2 className='text-xl font-bold mb-4'>Node Details</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='mb-4'>
-          <label className='block text-gray-700'>ID</label>
-          <input
-            type='text'
-            value={selectedNode.id}
-            readOnly
-            className='w-full px-3 py-2 border rounded'
-          />
-        </div>
-        <div className='mb-4'>
           <label className='block text-gray-700'>Data</label>
           <input
             type='text'
@@ -98,9 +89,12 @@ const NodeForm = () => {
             <span className="text-red-500 text-sm">This field is required</span>
           )}
         </div>
-        <div>
+        <div className="className='space-x-2 flex justify-between">
           <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-green-400 hover:text-white'>
             Save
+          </button>
+          <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-red-600 hover:text-white'>
+            Cancel
           </button>
         </div>
       </form>

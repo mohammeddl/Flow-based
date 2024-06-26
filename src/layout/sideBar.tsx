@@ -133,9 +133,8 @@ export default function SideBar() {
   const toggleNetworkDropdown = () => setIsOpenNetwork(!isOpenNetwork);
 
   return (
-    <div className='custom-class h-screen flex'>
+    <div className='custom-class h-screen flex'><br />
       <div className='flex flex-col bg-blue-200 p-4 text-white w-1/4'>
-        <h2 className='text-2xl font-bold mb-1'>Variant:</h2>
         <div className='space-x-2 flex justify-between'>
         <button
             className='px-2 text-sm bg-white text-black lg:px-1 xl:px- py-1 rounded-md'
@@ -185,7 +184,7 @@ export default function SideBar() {
       type="search"
       id="Valeur"
       className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      placeholder="Search The Node"
+      placeholder="Search The Node ..."
       required
       value={query}
       onChange={handleInputChange}
