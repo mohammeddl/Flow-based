@@ -2,28 +2,25 @@ import Flow from "../nodes/Flow";
 import { useDispatch, useSelector } from "react-redux";
 import { setVariant, addNode } from "../redux/workFlow/FlowSlice";
 import { useState } from "react";
-import { ChevronDown, ChevronRight, ChevronUp , Plus ,CircleDot ,Square , Download , FileUp} from "lucide-react";
+import { ChevronDown,  ChevronUp , Plus ,CircleDot ,Square , Download , FileUp} from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
-import SearchButton from './SearchButton';
 import { Node }from 'reactflow';
-import { current } from "@reduxjs/toolkit";
- 
-
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
   const selectedNode = useSelector((state) => state.flow.selectedNode);
   const getResponseNode = useSelector((state) => state.flow.responseNodes);
   const [query, setQuery] = useState('')
-  const addNodeToLocalStorage = (newNode) => {
-    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
+  const addNodeToLocalStorage = (newNode: Node) => {
+    const storedNodes = JSON.parse(localStorage.getItem("nodes") || '[]'); // Default to '[]' if null
     storedNodes.push(newNode);
     localStorage.setItem("nodes", JSON.stringify(storedNodes));
   };
+  
 
   const addNewText = () => {
-    const newNode: Node[] = {
+    const newNode: Node= {
       id: `node-${nodes.length + 1}`,
       type: "input",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -40,7 +37,7 @@ export default function SideBar() {
     dispatch(addNode(newNode));
   };
   const addRunButton = () => {
-    const newNode:Node[] = {
+    const newNode:Node= {
       id: `node-${nodes.length + 1}`,
       type: "output",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -58,7 +55,7 @@ export default function SideBar() {
   };
   
   const addHttps = () => {
-    const newNode:Node[] = {
+    const newNode:Node = {
       id: `nodeHtt-${nodes.length + 1}`,
       type: "httpsNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -68,7 +65,7 @@ export default function SideBar() {
     dispatch(addNode(newNode));
   };
   const addNewOutput = () => {
-    const newNode:Node[] = {
+    const newNode:Node = {
       id: `nodeRes-${nodes.length + 1}`,
       type: "selectorNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
@@ -77,7 +74,7 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: { target: { value: string; }; }) => {
     setQuery(e.target.value.trim());
   };
   const DisplayNodes = () => {
@@ -104,7 +101,7 @@ export default function SideBar() {
         // Si la recherche correspond à 'run', afficher le bouton correspondant
         return (
           <center>
-             <button type="button" class="w-full h-12 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md" onClick={addRunButton}>
+             <button type="button" className="w-full h-12 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md" onClick={addRunButton}>
              Run</button>
           </center>
         );} 
@@ -112,7 +109,7 @@ export default function SideBar() {
           // Si la recherche correspond à 'run', afficher le bouton correspondant
           return (
             <center>
-               <button type="button" class="w-full h-12 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md"onClick={addNewOutput}>
+               <button type="button" className="w-full h-12 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md"onClick={addNewOutput}>
                Status</button>
             </center>
           );} 
@@ -120,16 +117,13 @@ export default function SideBar() {
             // Si la recherche correspond à 'run', afficher le bouton correspondant
             return (
               <center>
-                 <button type="button" class="w-full h-12 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md"onClick={addNewText}>
+                 <button type="button" className="w-full h-12 text-sm bg-white text-black lg:px-1 xl:px-4 py-2 rounded-md"onClick={addNewText}>
                  Add Text</button>
               </center>
             );} 
    
   };
-
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDropdown = () => setIsOpen(!isOpen);
-  const [isOpenNetwork, setIsOpenNetwork] = useState(false);
+const [isOpenNetwork, setIsOpenNetwork] = useState(false);
   const toggleNetworkDropdown = () => setIsOpenNetwork(!isOpenNetwork);
 
   return (
