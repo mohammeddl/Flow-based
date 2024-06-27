@@ -5,7 +5,6 @@ import AboutUs from './About '
 import ProjectShowcase from './ProjectShowcaseProps '
 import Feedback from './Feedback'
 import Sponsor from './Sponsors'
-import SideBar from './sideBar';
 const Landing: React.FC = () => {
     return (
         <div>
