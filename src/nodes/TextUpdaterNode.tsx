@@ -15,7 +15,7 @@ export default function TextUpdaterNode({ data }) {
         <label htmlFor='text'>Text:</label>
         <input id='text' name='text' onChange={onChange} className='nodrag' />
       </div>
-      <Handle type='source' position={Position.Bottom} id='a' />
+      <Handle type='source' position={Position.Top} id='a' />
       <Handle
         type='source'
         position={Position.Bottom}
