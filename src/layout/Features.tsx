@@ -6,11 +6,9 @@ const Features: React.FC = () => {
         <section className="bg-gradient-to-br from-sky-200 via-purple-200 to-mauve-200 py-16">
       <div className="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div className="mr-24">
-          <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-4"><center>Features</center></h2>
-          <p className="text-lg text-gray-500">
-            <center>
-            Explore the powerful features that drive Flow-based to success.
-            </center>
+          <h2 style={{ textAlign: 'center' }}   className="text-3xl font-extrabold text-gray-900 sm:text-4xl mb-4">Features</h2>
+          <p  style={{ textAlign: 'center' }} className="text-lg text-gray-500">
+          Explore the powerful features that drive Flow-based to success.
           </p><br />
           <img src={react} className="w-full h-auto max-w-xl rounded-lg" alt="image description" />
         </div>
