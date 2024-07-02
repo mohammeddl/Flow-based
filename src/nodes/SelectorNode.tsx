@@ -3,7 +3,14 @@ import { deleteNode } from "../redux/workFlow/FlowSlice";
 import { Trash2 } from "lucide-react";
 import { Handle } from "reactflow";
 
-const SelectorNode = ({ id, data }) => {
+
+interface SelectorNodeProps {
+  id: string;
+  data: {
+    label: string;
+  };
+}
+const SelectorNode: React.FC<SelectorNodeProps> = ({ id, data }) => {
   const dispatch = useDispatch();
 
   const handleDelete = () => {
@@ -39,6 +46,18 @@ const SelectorNode = ({ id, data }) => {
         position="bottom"
         id="b"
         className="w-2 h-2 bg-gray-800 border-none rounded-full"
+      />
+      <Handle
+        type="target"
+        position="left"
+        id="c"
+        className="w-1 h-1 bg-green-800 border-none rounded-full"
+      />
+      <Handle
+        type="target"
+        position="right"
+        id="d"
+        className="w-1 h-1 bg-red-800 border-none rounded-full"
       />
       
     </div>

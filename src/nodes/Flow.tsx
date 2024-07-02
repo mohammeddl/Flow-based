@@ -25,12 +25,16 @@ import {
 import TextUpdaterNode from "./TextUpdaterNode";
 import SelectorNode from "./SelectorNode";
 import httpsNode from "./httpsNode";
+import SuccessNode from "./SuccessNode";
+import ErrorNode from "./ErrorNode";
 import axios from "axios";
 
 const nodeTypes = {
   textUpdater: TextUpdaterNode,
   selectorNode: SelectorNode,
   httpsNode: httpsNode,
+  SuccessNode:SuccessNode,
+  ErrorNode:ErrorNode
 };
 
 function Flow() {
