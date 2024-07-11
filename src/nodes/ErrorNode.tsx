@@ -28,16 +28,22 @@ const ErrorNode: React.FC<ErrorNodeProps> = ({ id, data }) => {
   };
 
   return (
-    <div className="relative py-3 px-2  border border-red-400 rounded-lg bg-red-100 flex flex-col items-center">
+    <div className="relative p-1 border border-red-400 rounded-lg bg-red-100 flex flex-col items-center">
       <Handle
         type="source"
-        position="top"
+        position="bottom"
         id="a"
-        className="w-3 h-3 bg-red-600 border-none rounded-full"
+        className="w-2 h-2 bg-red-600 border-none rounded-full"
       />
-      <p className=" px-4 text-md font-semibold text-red-800">{data.label}</p>
+      <Handle
+        type="target"
+        position="top"
+        id="b"
+        className="w-2 h-2 bg-red-600 border-none rounded-full"
+      />
+      <p className=" px-2 text-md font-semibold text-red-800">{data.label}</p>
       <button
-        className="mt-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+        className="mb-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
         onClick={handleDelete}
       >
         <Trash2 className="w-2 h-2" />

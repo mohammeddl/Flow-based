@@ -14,6 +14,8 @@ import {
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
 import { Node } from "reactflow";
+import ExportModal from "../nodes/ExportModal";
+import ImportModal from "../nodes/ImportModal";
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
@@ -141,6 +143,41 @@ export default function SideBar() {
       );
     }
   };
+
+
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [exportData, setExportData] = useState(null);
+
+  const handleExportClick = () => {
+    const nodes = JSON.parse(localStorage.getItem('nodes')) || [];
+    const edges = JSON.parse(localStorage.getItem('edges')) || [];
+    setExportData({ nodes, edges });
+    setModalOpen(true);
+  };
+
+  const [isImportModalOpen, setImportModalOpen] = useState(false);
+
+  const handleImportClick = () => {
+    setImportModalOpen(true);
+  };
+  const handleImportSubmit = (data: string) => {
+    try {
+      const parsedData = JSON.parse(data);
+      if (parsedData.nodes) {
+        localStorage.setItem('nodes', JSON.stringify(parsedData.nodes));
+      }
+      if (parsedData.edges) {
+        localStorage.setItem('edges', JSON.stringify(parsedData.edges));
+      }
+      // Optionally dispatch actions to update the Redux store
+      // dispatch(setNodes(parsedData.nodes));
+      // dispatch(setEdges(parsedData.edges));
+    } catch (error) {
+      console.error('Invalid JSON data', error);
+    }
+  };
+
+
   const [isOpenNetwork, setIsOpenNetwork] = useState(false);
   const toggleNetworkDropdown = () => setIsOpenNetwork(!isOpenNetwork);
 
@@ -166,7 +203,7 @@ export default function SideBar() {
           </button>
           <button
             className='flex items-center bg-white text-black text-sm px-1 py-1 rounded-md'
-            onClick={() => dispatch(setVariant("dots"))}>
+            onClick={handleImportClick}>
             <Download size={24} color='black' />
             <span className='ml-2'>
               <strong>Import</strong>
@@ -174,7 +211,7 @@ export default function SideBar() {
           </button>
           <button
             className='flex items-center bg-white text-black text-sm px-2 py-2 rounded-md'
-            onClick={() => dispatch(setVariant("dots"))}>
+            onClick={handleExportClick}>
             <FileUp size={24} color='black' />
             <span className='ml-2'>
               <strong>Export</strong>{" "}
@@ -292,6 +329,15 @@ export default function SideBar() {
             <NodeResponse />
           </div>
         )}
+        { exportData && (
+          <ExportModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} data={exportData} />
+        )
+        }
+        <ImportModal
+        isOpen={isImportModalOpen}
+        onClose={() => setImportModalOpen(false)}
+        onSubmit={handleImportSubmit}
+      />
       </div>
     </div>
   );

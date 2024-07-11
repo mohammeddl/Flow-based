@@ -6,6 +6,7 @@ const initialState = {
   variant: "cross",
   selectedNode: null,
   responseNodes: {},
+  successNode:{}
 };
 
 const flowSlice = createSlice({
@@ -46,6 +47,10 @@ const flowSlice = createSlice({
         (edge) => edge.source !== nodeId && edge.target !== nodeId
       );
     },
+    addSuccessNode: (state, action) => {
+      state.successNode = action.payload;
+    }
+
   },
 });
 
@@ -59,5 +64,6 @@ export const {
   addResponseNode,
   clearResponseNodes,
   deleteNode,
+  addSuccessNode
 } = flowSlice.actions;
 export default flowSlice.reducer;

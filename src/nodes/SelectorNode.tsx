@@ -28,12 +28,7 @@ const SelectorNode: React.FC<SelectorNodeProps> = ({ id, data }) => {
 
   return (
     <div className="relative p-2 border border-gray-400 rounded-lg bg-gray-100 flex flex-col items-center">
-      <Handle
-        type="target"
-        position="top"
-        id="a"
-        className="w-2 h-2 bg-gray-800 border-none rounded-full"
-      />
+     
       <p className="text-sm">{data.label}</p>
       <button
         className="mt-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"

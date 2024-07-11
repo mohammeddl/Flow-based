@@ -20,6 +20,7 @@ import {
   setSelectedNode,
   addResponseNode,
   clearResponseNodes,
+  addSuccessNode
 } from "../redux/workFlow/FlowSlice";
 
 import TextUpdaterNode from "./TextUpdaterNode";
@@ -123,6 +124,9 @@ function Flow() {
         } catch (error) {
           console.error(error);
         }
+      }else if (node.type === "SuccessNode") {
+        dispatch(clearResponseNodes());
+        dispatch(addSuccessNode({ data: node.data.label, id: node.id }));
       }
     },
     [dispatch, nodes]

@@ -28,19 +28,25 @@ const SuccessNode: React.FC<SuccessNodeProps> = ({ id, data }) => {
   };
 
   return (
-    <div className="relative p-4 border-2 border-green-600 rounded-lg bg-green-50 flex flex-col items-center shadow-lg">
+    <div className="relative   p-1 border-2 border-green-600 rounded-lg bg-green-50 flex flex-col items-center shadow-lg">
       <Handle
         type="source"
         position="bottom"
         id="a"
-        className="w-3 h-3 bg-green-600 border-none rounded-full"
+        className="w-2 h-2 bg-green-600 border-none rounded-full"
       />
-      <p className="text-md font-semibold text-green-800">{data.label}</p>
+      <Handle
+        type="target"
+        position="top"
+        id="b"
+        className="w-2 h-2 bg-green-600 border-none rounded-full"
+      />
+      <p className="text-sm font-semibold text-green-800">{data.label}</p>
       <button
-        className="mt-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
+        className="my-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"
         onClick={handleDelete}
       >
-        <Trash2 className="w-2 h-2" />
+        <Trash2 className="w-2 h-2 " />
       </button>
      
     </div>
