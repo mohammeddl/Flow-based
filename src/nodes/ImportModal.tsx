@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 
 interface ImportModalProps {
   isOpen: boolean;
@@ -18,9 +19,19 @@ const ImportModal: React.FC<ImportModalProps> = ({
   };
 
   const handleSubmit = () => {
-    onSubmit(inputData);
-    setInputData("");
-    onClose();
+    if(inputData == "") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Please enter some data to import!",
+        color: "#2196F3",
+        confirmButtonColor: "#2196F3",
+      });
+    }else {
+      onSubmit(inputData);
+      setInputData("");
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -36,12 +47,12 @@ const ImportModal: React.FC<ImportModalProps> = ({
           placeholder='Paste your data here...'
         />
         <button
-          className='mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600'
+          className='mt-4 bg-[#2196F3] text-white px-4 py-2 rounded hover:bg-blue-600'
           onClick={handleSubmit}>
           Submit
         </button>
         <button
-          className='mt-4 ml-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600'
+          className='mt-4 ml-2 bg-[#F44336] text-white px-4 py-2 rounded hover:bg-red-600'
           onClick={onClose}>
           Close
         </button>

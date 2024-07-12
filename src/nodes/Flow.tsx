@@ -142,8 +142,10 @@ function Flow() {
         return "#6ede87";
       case "output":
         return "#6865A5";
-      case "textUpdater":
+      case "ErrorNode":
         return "#ff7e7e";
+        case "SuccesNode":
+        return "#8ee7ff";
       default:
         return "#ff0072";
     }

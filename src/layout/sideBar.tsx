@@ -1,6 +1,11 @@
 import Flow from "../nodes/Flow";
 import { useDispatch, useSelector } from "react-redux";
-import { setVariant, addNode, setEdges,setNodes } from "../redux/workFlow/FlowSlice";
+import {
+  setVariant,
+  addNode,
+  setEdges,
+  setNodes,
+} from "../redux/workFlow/FlowSlice";
 import { useState } from "react";
 import {
   ChevronDown,
@@ -10,6 +15,11 @@ import {
   Square,
   Download,
   FileUp,
+  ActivityIcon,
+  PlayIcon,
+  CircleCheckIcon,
+  ChromeIcon,
+  TriangleAlertIcon,
 } from "lucide-react";
 import NodeForm from "../nodes/NodeForm";
 import NodeResponse from "../nodes/NodeResponse";
@@ -254,16 +264,14 @@ export default function SideBar() {
         <div>
           <DisplayNodes />
         </div>
-        <br />
+<p className="mb-4 text-black">-----------------------nodes------------------------</p>
         <div>
           <div className='nodes'>
             <div
               onClick={toggleNetworkDropdown}
               className='flex items-center justify-between h-12 cursor-pointer bg-white rounded-lg px-4'>
               {/* Contenu à gauche (au milieu) */}
-              <span className='text-black'>Nodes</span>
-
-              {/* Chevrons à droite */}
+              <span className='text-black font-semibold'>Nodes</span>
               {isOpenNetwork ? (
                 <ChevronUp className='ml-2 text-black' />
               ) : (
@@ -271,40 +279,42 @@ export default function SideBar() {
               )}
             </div>
             {isOpenNetwork && (
-              <ul className='bg-white flex flex-col items-center  rounded-md '>
+              <ul className=' bg-white flex flex-col items-center  rounded-md '>
                 <li>
                   <button
-                    className='bg-red-500 text-white lg:px-12 px-5  py-2 m-4 rounded-md border-solid border-2 border-gray-300'
+                    className='flex bg-[#FF4C4C] text-white lg:px-12 px-5  py-2 m-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addHttps}>
+                      <ChromeIcon className="mr-2 mt-1 h-4 w-4" />
                     Https
                   </button>
                 </li>
                 <li>
-                  <button
-                    className='bg-green-500 text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addNewOutput}>
+                  <button  className='flex bg-[#4CAF50] text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300' onClick={addNewOutput} >
+                    <ActivityIcon className='mr-2 mt-1  h-4 w-4' />
                     Status
                   </button>
                 </li>
-
                 <li>
                   <button
-                    className='bg-blue-400 text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='flex bg-[#2196F3] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={addRunButton}>
+                      <PlayIcon className="mr-2 mt-1 h-4 w-4" />
                     Run
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-gray-400 text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='flex bg-[#8BC34A] text-white lg:px-12 px-6 py-2 mx-3 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={successNode}>
+                       <CircleCheckIcon className="mr-2 mt-1 h-4 w-4" />
                     Success
                   </button>
                 </li>
                 <li>
                   <button
-                    className='bg-gray-400 text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    className='flex bg-[#F44336] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
                     onClick={errorNode}>
+                      <TriangleAlertIcon className="mr-2 mt-1 h-4 w-4" />
                     Error
                   </button>
                 </li>

@@ -17,7 +17,7 @@ interface ExportModalProps {
             </pre>
           </div>
           <button
-            className="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-400"
+            className="mt-4 bg-[#2196F3] text-white px-4 py-2 rounded hover:bg-blue-400"
             onClick={onClose}
           >
             Close
