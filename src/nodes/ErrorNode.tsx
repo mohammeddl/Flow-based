@@ -35,12 +35,7 @@ const ErrorNode: React.FC<ErrorNodeProps> = ({ id, data }) => {
         id="a"
         className="w-2 h-2 bg-red-600 border-none rounded-full"
       />
-      <Handle
-        type="target"
-        position="top"
-        id="b"
-        className="w-2 h-2 bg-red-600 border-none rounded-full"
-      />
+     
       <p className=" px-2 text-md font-semibold text-red-800">{data.label}</p>
       <button
         className="mb-1 p-1 bg-red-500 text-white rounded-full hover:bg-red-600"

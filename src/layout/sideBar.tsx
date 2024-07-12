@@ -1,6 +1,6 @@
 import Flow from "../nodes/Flow";
 import { useDispatch, useSelector } from "react-redux";
-import { setVariant, addNode } from "../redux/workFlow/FlowSlice";
+import { setVariant, addNode, setEdges,setNodes } from "../redux/workFlow/FlowSlice";
 import { useState } from "react";
 import {
   ChevronDown,
@@ -34,7 +34,6 @@ export default function SideBar() {
       type: "SuccessNode",
       position: { x: Math.random() * 600, y: Math.random() * 400 },
       data: { label: "Success" },
-      
     };
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
@@ -144,13 +143,12 @@ export default function SideBar() {
     }
   };
 
-
   const [isModalOpen, setModalOpen] = useState(false);
   const [exportData, setExportData] = useState(null);
 
   const handleExportClick = () => {
-    const nodes = JSON.parse(localStorage.getItem('nodes')) || [];
-    const edges = JSON.parse(localStorage.getItem('edges')) || [];
+    const nodes = JSON.parse(localStorage.getItem("nodes")) || [];
+    const edges = JSON.parse(localStorage.getItem("edges")) || [];
     setExportData({ nodes, edges });
     setModalOpen(true);
   };
@@ -164,19 +162,18 @@ export default function SideBar() {
     try {
       const parsedData = JSON.parse(data);
       if (parsedData.nodes) {
-        localStorage.setItem('nodes', JSON.stringify(parsedData.nodes));
+        localStorage.setItem("nodes", JSON.stringify(parsedData.nodes));
       }
       if (parsedData.edges) {
-        localStorage.setItem('edges', JSON.stringify(parsedData.edges));
+        localStorage.setItem("edges", JSON.stringify(parsedData.edges));
       }
-      // Optionally dispatch actions to update the Redux store
-      // dispatch(setNodes(parsedData.nodes));
-      // dispatch(setEdges(parsedData.edges));
+      dispatch(setNodes(parsedData.nodes));
+      dispatch(setEdges(parsedData.edges));
+      setImportModalOpen(false);
     } catch (error) {
-      console.error('Invalid JSON data', error);
+      console.error("Invalid JSON data", error);
     }
   };
-
 
   const [isOpenNetwork, setIsOpenNetwork] = useState(false);
   const toggleNetworkDropdown = () => setIsOpenNetwork(!isOpenNetwork);
@@ -329,15 +326,18 @@ export default function SideBar() {
             <NodeResponse />
           </div>
         )}
-        { exportData && (
-          <ExportModal isOpen={isModalOpen} onClose={() => setModalOpen(false)} data={exportData} />
-        )
-        }
+        {exportData && (
+          <ExportModal
+            isOpen={isModalOpen}
+            onClose={() => setModalOpen(false)}
+            data={exportData}
+          />
+        )}
         <ImportModal
-        isOpen={isImportModalOpen}
-        onClose={() => setImportModalOpen(false)}
-        onSubmit={handleImportSubmit}
-      />
+          isOpen={isImportModalOpen}
+          onClose={() => setImportModalOpen(false)}
+          onSubmit={handleImportSubmit}
+        />
       </div>
     </div>
   );
