@@ -98,12 +98,10 @@ export default function SideBar() {
     dispatch(addNode(newNode));
   };
 
-const onDragStart =(event: any, nodeType: string, label:string) => {
-  event.dataTransfer.setData("application/reactflow", nodeType);
-  event.dataTransfer.setData("label", label);
-}
-
-
+  const onDragStart = (event: any, nodeType: string, label: string) => {
+    event.dataTransfer.setData("application/reactflow", nodeType);
+    event.dataTransfer.setData("label", label);
+  };
 
   const handleInputChange = (e: { target: { value: string } }) => {
     setQuery(e.target.value.trim());
@@ -123,7 +121,6 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
         </center>
       );
     } else if ("run".startsWith(query.toLowerCase())) {
-      
       return (
         <center>
           <button
@@ -135,7 +132,6 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
         </center>
       );
     } else if ("status".startsWith(query.toLowerCase())) {
-      
       return (
         <center>
           <button
@@ -147,7 +143,6 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
         </center>
       );
     } else if ("text".startsWith(query.toLowerCase())) {
-    
       return (
         <center>
           <button
@@ -199,7 +194,7 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
   return (
     <div className='custom-class h-screen flex'>
       <div className='flex flex-col bg-blue-200 p-4 text-white w-1/4'>
-      <h2 className='text-2xl font-bold mb-2 '>Variant:</h2>
+        <h2 className='text-2xl font-bold mb-2 '>Variant:</h2>
         <div className='space-x-2 flex justify-between'>
           <button
             className='px-2 text-sm bg-white text-black lg:px-1 xl:px- py-1 rounded-md'
@@ -272,7 +267,7 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
         <div>
           <DisplayNodes />
         </div>
-<h2 className="text-2xl font-bold mb-2">All Nodes:</h2>
+        <h2 className='text-2xl font-bold mb-2'>All Nodes:</h2>
         <div>
           <div className='nodes'>
             <div
@@ -291,15 +286,22 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
                 <li>
                   <button
                     className='flex bg-[#FF4C4C] text-white lg:px-12 px-5  py-2 m-4 rounded-md border-solid border-2 border-gray-300'
-                    onDragStart={(event) => onDragStart(event, "httpsNode","Https")} draggable
-                    >
-                      <ChromeIcon className="mr-2 mt-1 h-4 w-4" />
+                    onDragStart={(event) =>
+                      onDragStart(event, "httpsNode", "Https")
+                    }
+                    draggable>
+                    <ChromeIcon className='mr-2 mt-1 h-4 w-4' />
                     Https
                   </button>
                 </li>
                 <li>
-                  <button  className='flex bg-[#4CAF50] text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300' onClick={addNewOutput}
-                  onDragStart={(event)=>onDragStart(event, "selectorNode","Response")} draggable>
+                  <button
+                    className='flex bg-[#4CAF50] text-white lg:px-12 px-5 py-2  mb-4 rounded-md border-solid border-2 border-gray-300'
+                    onClick={addNewOutput}
+                    onDragStart={(event) =>
+                      onDragStart(event, "selectorNode", "Response")
+                    }
+                    draggable>
                     <ActivityIcon className='mr-2 mt-1  h-4 w-4' />
                     Status
                   </button>
@@ -307,25 +309,35 @@ const onDragStart =(event: any, nodeType: string, label:string) => {
                 <li>
                   <button
                     className='flex bg-[#2196F3] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addRunButton}  onDragStart={(event) => onDragStart(event, "output","Run" )} draggable >
-                      <PlayIcon className="mr-2 mt-1 h-4 w-4" />
+                    onClick={addRunButton}
+                    onDragStart={(event) => onDragStart(event, "output", "Run")}
+                    draggable>
+                    <PlayIcon className='mr-3 mt-1 h-4 w-4' />
                     Run
                   </button>
                 </li>
                 <li>
                   <button
-                    className='flex bg-[#8BC34A] text-white lg:px-12 px-6 py-2 mx-3 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={successNode} onDragStart={(event)=>onDragStart(event,"SuccessNode", "Success")} draggable>
-                       <CircleCheckIcon className="mr-2 mt-1 h-4 w-4" />
-                    Success
+                    className='flex bg-[#F44336] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    onClick={errorNode}
+                    onDragStart={(event) =>
+                      onDragStart(event, "ErrorNode", "Error")
+                    }
+                    draggable>
+                    <TriangleAlertIcon className='mr-2 mt-1 h-4 w-4' />
+                    Error
                   </button>
                 </li>
                 <li>
                   <button
-                    className='flex bg-[#F44336] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={errorNode} onDragStart={(event)=>onDragStart(event,"ErrorNode", "Error")} draggable>
-                      <TriangleAlertIcon className="mr-2 mt-1 h-4 w-4" />
-                    Error
+                    className='flex bg-[#8BC34A] text-white lg:px-12 px-6 py-2 mx-3 mb-4 rounded-md border-solid border-2 border-gray-300'
+                    onClick={successNode}
+                    onDragStart={(event) =>
+                      onDragStart(event, "SuccessNode", "Success")
+                    }
+                    draggable>
+                    <CircleCheckIcon className='mr-2 mt-1 h-4 w-4' />
+                    Success
                   </button>
                 </li>
               </ul>

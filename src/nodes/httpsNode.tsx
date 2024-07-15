@@ -16,6 +16,18 @@ export default function httpsNode() {
         id='b'
         className='w-1 h-1 bg-gray-800 border-none rounded-full'
       />
+       <Handle
+        type="target"
+        position="left"
+        id="c"
+        className="w-1 h-1 bg-green-800 border-none rounded-full"
+      />
+      <Handle
+        type="target"
+        position="right"
+        id="d"
+        className="w-1 h-1 bg-red-800 border-none rounded-full"
+      />
     </div>
   );
 }
