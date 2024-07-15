@@ -39,7 +39,7 @@ const NodeForm = () => {
 
   return (
     <div className='p-4 bg-blue-200 border rounded shadow-md '>
-      <div className='flex justify-end'>
+      <div className='flex justify-end '>
         <button onClick={toggleForm} className='text-gray-500'>
           X
         </button>
@@ -72,6 +72,16 @@ const NodeForm = () => {
           )}
         </div>
         <div className='mb-4'>
+          <label className='block text-gray-700'>Body (JSON format)</label>
+          <input
+            {...register("body")}
+            className='w-full px-3 py-2 border rounded'
+          />
+          {errors.body && (
+            <span className="text-red-500 text-sm">This field is required</span>
+          )}
+        </div>
+        <div className='mb-4'>
           <label className='block text-gray-700'>Headers (JSON format)</label>
           <input
             {...register("header")}
@@ -86,7 +96,6 @@ const NodeForm = () => {
             Save
           </button>
           <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-red-600 hover:text-white' onClick={() => setIsOpen(false)}>
-          
             Cancel
           </button>
         </div>

@@ -7,6 +7,7 @@ export default function NodeResponse() {
   const responseNodes = useSelector((state) => state.flow.responseNodes);
 
   const [isOpen, setIsOpen] = useState(true);
+  
 
   const toggleForm = () => {
     setIsOpen(!isOpen);
@@ -29,7 +30,7 @@ export default function NodeResponse() {
           <div className="mb-4 ">
             <h3 className="font-bold">Response from Node {responseNodes.id}:</h3>
             <p className="w-1/2 ">{JSON.stringify(responseNodes, null, 2)}</p>
-            {responseNodes.data.message && (
+            {responseNodes.data && (
               <img
                 className="h-fit"
                 src={responseNodes.data.message}

@@ -4,4 +4,5 @@ export type THttpForm = {
   method: string;
   https: string;
   header: string;
+  body:string;
 };
