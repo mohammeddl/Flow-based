@@ -26,6 +26,7 @@ import NodeResponse from "../nodes/NodeResponse";
 import { Node } from "reactflow";
 import ExportModal from "../nodes/ExportModal";
 import ImportModal from "../nodes/ImportModal";
+
 export default function SideBar() {
   const dispatch = useDispatch();
   const nodes = useSelector((state) => state.flow.nodes);
@@ -96,6 +97,13 @@ export default function SideBar() {
     addNodeToLocalStorage(newNode);
     dispatch(addNode(newNode));
   };
+
+const onDragStart = (event, nodeType) => {
+    event.dataTransfer.setData("application/reactflow", nodeType);
+    event.dataTransfer.effectAllowed = "move";
+  }
+
+
   const handleInputChange = (e: { target: { value: string } }) => {
     setQuery(e.target.value.trim());
   };
@@ -103,7 +111,6 @@ export default function SideBar() {
     if (query === "") {
       return <div></div>;
     } else if ("https".startsWith(query.toLowerCase())) {
-      // Si la recherche correspond à 'run', afficher le bouton correspondant
       return (
         <center>
           <button
@@ -115,7 +122,7 @@ export default function SideBar() {
         </center>
       );
     } else if ("run".startsWith(query.toLowerCase())) {
-      // Si la recherche correspond à 'run', afficher le bouton correspondant
+      
       return (
         <center>
           <button
@@ -127,7 +134,7 @@ export default function SideBar() {
         </center>
       );
     } else if ("status".startsWith(query.toLowerCase())) {
-      // Si la recherche correspond à 'run', afficher le bouton correspondant
+      
       return (
         <center>
           <button
@@ -139,7 +146,7 @@ export default function SideBar() {
         </center>
       );
     } else if ("text".startsWith(query.toLowerCase())) {
-      // Si la recherche correspond à 'run', afficher le bouton correspondant
+    
       return (
         <center>
           <button
@@ -190,8 +197,8 @@ export default function SideBar() {
 
   return (
     <div className='custom-class h-screen flex'>
-      <br />
       <div className='flex flex-col bg-blue-200 p-4 text-white w-1/4'>
+      <h2 className='text-2xl font-bold mb-2 '>Variant:</h2>
         <div className='space-x-2 flex justify-between'>
           <button
             className='px-2 text-sm bg-white text-black lg:px-1 xl:px- py-1 rounded-md'
@@ -264,7 +271,7 @@ export default function SideBar() {
         <div>
           <DisplayNodes />
         </div>
-<p className="mb-4 text-black">-----------------------nodes------------------------</p>
+<h2 className="text-2xl font-bold mb-2">All Nodes:</h2>
         <div>
           <div className='nodes'>
             <div
@@ -283,13 +290,15 @@ export default function SideBar() {
                 <li>
                   <button
                     className='flex bg-[#FF4C4C] text-white lg:px-12 px-5  py-2 m-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addHttps}>
+                    onDragStart={(event) => onDragStart(event, "httpsNode")} draggable
+                    >
                       <ChromeIcon className="mr-2 mt-1 h-4 w-4" />
                     Https
                   </button>
                 </li>
                 <li>
-                  <button  className='flex bg-[#4CAF50] text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300' onClick={addNewOutput} >
+                  <button  className='flex bg-[#4CAF50] text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300' onClick={addNewOutput}
+                  onDragStart={(event)=>onDragStart(event, "selectorNode")} draggable>
                     <ActivityIcon className='mr-2 mt-1  h-4 w-4' />
                     Status
                   </button>
@@ -297,7 +306,7 @@ export default function SideBar() {
                 <li>
                   <button
                     className='flex bg-[#2196F3] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addRunButton}>
+                    onClick={addRunButton}  onDragStart={(event) => onDragStart(event, "output")} draggable >
                       <PlayIcon className="mr-2 mt-1 h-4 w-4" />
                     Run
                   </button>
@@ -305,7 +314,7 @@ export default function SideBar() {
                 <li>
                   <button
                     className='flex bg-[#8BC34A] text-white lg:px-12 px-6 py-2 mx-3 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={successNode}>
+                    onClick={successNode} onDragStart={(event)=>onDragStart(event,"SuccessNode")} draggable>
                        <CircleCheckIcon className="mr-2 mt-1 h-4 w-4" />
                     Success
                   </button>
@@ -313,7 +322,7 @@ export default function SideBar() {
                 <li>
                   <button
                     className='flex bg-[#F44336] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={errorNode}>
+                    onClick={errorNode} onDragStart={(event)=>onDragStart(event,"ErrorNode")} draggable>
                       <TriangleAlertIcon className="mr-2 mt-1 h-4 w-4" />
                     Error
                   </button>

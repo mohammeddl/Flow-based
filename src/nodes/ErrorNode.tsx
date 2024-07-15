@@ -30,6 +30,12 @@ const ErrorNode: React.FC<ErrorNodeProps> = ({ id, data }) => {
   return (
     <div className="relative p-1 border border-red-400 rounded-lg bg-red-100 flex flex-col items-center">
       <Handle
+        type="target"
+        position="top"
+        id="b"
+        className="w-2 h-2 bg-red-600 border-none rounded-full"
+      />
+      <Handle
         type="source"
         position="bottom"
         id="a"

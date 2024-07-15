@@ -45,8 +45,8 @@ function Flow() {
   const variant = useSelector((state) => state.flow.variant);
 
   const updateNodePositionInLocalStorage = (node) => {
-    const storedNodes = JSON.parse(localStorage.getItem("nodes")) || [];
-    const updatedNodes = storedNodes.map((storedNode) =>
+    const storedNodes = JSON.parse(localStorage.getItem("nodes") || "") || [];
+    const updatedNodes = storedNodes.map((storedNode: Node) =>
       storedNode.id === node.id
         ? { ...storedNode, position: node.position }
         : storedNode
@@ -77,6 +77,31 @@ function Flow() {
     },
     [edges, dispatch]
   );
+
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+  }, []);
+
+  const onDrop = useCallback((event) =>{
+    event.preventDefault();
+    const reactFlowBounds = event.target.getBoundingClientRect();
+    const type = event.dataTransfer.getData("application/reactflow");
+    const position = {
+      x: (event.clientX - reactFlowBounds.left) - 100,
+      y: (event.clientY - reactFlowBounds.top) - 40,
+    };
+    const newNode = {
+      id: Date.now().toString(),
+      type,
+      position,
+      data: { label: `${type} node` },
+    };
+    dispatch(setNodes([...nodes, newNode]));
+    localStorage.setItem("nodes", JSON.stringify([...nodes, newNode]));
+  }, [dispatch, nodes]);
+
+    
 
   function getSourceByTarget(targetId: string, nodes: Node[]) {
     const edge = edges.find((edge) => edge.target === targetId);
@@ -170,6 +195,8 @@ function Flow() {
       nodeTypes={nodeTypes}
       defaultEdgeOptions={edgeOptions}
       attributionPosition='top-right'
+      onDrop={onDrop}
+      onDragOver={onDragOver}
       fitView>
       <MiniMap
         className='bg-blue-200'

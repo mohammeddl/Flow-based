@@ -50,7 +50,6 @@ const flowSlice = createSlice({
     addSuccessNode: (state, action) => {
       state.successNode = action.payload;
     }
-
   },
 });
 

@@ -44,17 +44,9 @@ const NodeForm = () => {
           X
         </button>
       </div>
-      <h2 className='text-xl font-bold mb-4'>Node Details</h2>
+      <h2 className='text-xl font-bold mb-4'>Form Https</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='mb-4'>
-          <label className='block text-gray-700'>Data</label>
-          <input
-            type='text'
-            value={JSON.stringify(selectedNode.data)}
-            readOnly
-            className='w-full px-3 py-2 border rounded'
-          />
-        </div>
+        
         <div className='mb-4'>
           <label className='block text-gray-700'>Method</label>
           <select
@@ -93,7 +85,8 @@ const NodeForm = () => {
           <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-green-400 hover:text-white'>
             Save
           </button>
-          <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-red-600 hover:text-white'>
+          <button className='bg-white px-4 p-2 rounded-md font-semibold text-1xl hover:bg-red-600 hover:text-white' onClick={() => setIsOpen(false)}>
+          
             Cancel
           </button>
         </div>
