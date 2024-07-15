@@ -87,6 +87,7 @@ function Flow() {
     event.preventDefault();
     const reactFlowBounds = event.target.getBoundingClientRect();
     const type = event.dataTransfer.getData("application/reactflow");
+    const label = event.dataTransfer.getData("label");
     const position = {
       x: (event.clientX - reactFlowBounds.left) - 100,
       y: (event.clientY - reactFlowBounds.top) - 40,
@@ -95,7 +96,7 @@ function Flow() {
       id: Date.now().toString(),
       type,
       position,
-      data: { label: `${type} node` },
+      data: { label },
     };
     dispatch(setNodes([...nodes, newNode]));
     localStorage.setItem("nodes", JSON.stringify([...nodes, newNode]));

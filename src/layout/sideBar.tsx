@@ -98,10 +98,11 @@ export default function SideBar() {
     dispatch(addNode(newNode));
   };
 
-const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData("application/reactflow", nodeType);
-    event.dataTransfer.effectAllowed = "move";
-  }
+const onDragStart =(event: any, nodeType: string, label:string) => {
+  event.dataTransfer.setData("application/reactflow", nodeType);
+  event.dataTransfer.setData("label", label);
+}
+
 
 
   const handleInputChange = (e: { target: { value: string } }) => {
@@ -290,7 +291,7 @@ const onDragStart = (event, nodeType) => {
                 <li>
                   <button
                     className='flex bg-[#FF4C4C] text-white lg:px-12 px-5  py-2 m-4 rounded-md border-solid border-2 border-gray-300'
-                    onDragStart={(event) => onDragStart(event, "httpsNode")} draggable
+                    onDragStart={(event) => onDragStart(event, "httpsNode","Https")} draggable
                     >
                       <ChromeIcon className="mr-2 mt-1 h-4 w-4" />
                     Https
@@ -298,7 +299,7 @@ const onDragStart = (event, nodeType) => {
                 </li>
                 <li>
                   <button  className='flex bg-[#4CAF50] text-white lg:px-12 px-5 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300' onClick={addNewOutput}
-                  onDragStart={(event)=>onDragStart(event, "selectorNode")} draggable>
+                  onDragStart={(event)=>onDragStart(event, "selectorNode","Response")} draggable>
                     <ActivityIcon className='mr-2 mt-1  h-4 w-4' />
                     Status
                   </button>
@@ -306,7 +307,7 @@ const onDragStart = (event, nodeType) => {
                 <li>
                   <button
                     className='flex bg-[#2196F3] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={addRunButton}  onDragStart={(event) => onDragStart(event, "output")} draggable >
+                    onClick={addRunButton}  onDragStart={(event) => onDragStart(event, "output","Run" )} draggable >
                       <PlayIcon className="mr-2 mt-1 h-4 w-4" />
                     Run
                   </button>
@@ -314,7 +315,7 @@ const onDragStart = (event, nodeType) => {
                 <li>
                   <button
                     className='flex bg-[#8BC34A] text-white lg:px-12 px-6 py-2 mx-3 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={successNode} onDragStart={(event)=>onDragStart(event,"SuccessNode")} draggable>
+                    onClick={successNode} onDragStart={(event)=>onDragStart(event,"SuccessNode", "Success")} draggable>
                        <CircleCheckIcon className="mr-2 mt-1 h-4 w-4" />
                     Success
                   </button>
@@ -322,7 +323,7 @@ const onDragStart = (event, nodeType) => {
                 <li>
                   <button
                     className='flex bg-[#F44336] text-white lg:px-14 px-6 py-2 mx-4 mb-4 rounded-md border-solid border-2 border-gray-300'
-                    onClick={errorNode} onDragStart={(event)=>onDragStart(event,"ErrorNode")} draggable>
+                    onClick={errorNode} onDragStart={(event)=>onDragStart(event,"ErrorNode", "Error")} draggable>
                       <TriangleAlertIcon className="mr-2 mt-1 h-4 w-4" />
                     Error
                   </button>
